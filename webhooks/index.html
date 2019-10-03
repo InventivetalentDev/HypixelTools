@@ -34,7 +34,7 @@
                             <select id="webhookContext">
                                 <option value="magmaBoss">Magma Boss</option>
                                 <option value="darkAuction" disabled>Dark Auction</option>
-                                <option value="newYear" disabled>New Year's</option>
+                                <option value="newYear">New Year's</option>
                                 <option value="bankInterest" disabled>Bank Interest</option>
                             </select>
                             <label>Context</label>
@@ -72,40 +72,45 @@
                 $('select').formSelect();
 
                 $("#webhookUrl").on("keyup", function () {
-                    let val = $(this).val();
-                    let valid = $(this)[0].checkValidity();
-                    console.log(val)
+                    let val = $("#webhookUrl").val();
+                    let valid = $("#webhookUrl")[0].checkValidity();
+                    console.log(val);
+                    console.log("valid: " + valid);
                     let disable = val.length < 5 || !val.startsWith("http") || !valid;
                     $("#createWebhookBtn").attr("disabled", disable);
-                    $(" #deleteWebhookBtn").attr("disabled", disable);
+                    $("#deleteWebhookBtn").attr("disabled", disable);
                 });
 
 
                 $("#createWebhookBtn").click(function (e) {
                     e.preventDefault();
                     if (confirm("Are you sure you want to create a new webhook?")) {
+                        console.log("confirmed add");
                         let captcha = grecaptcha.getResponse();
+                        console.log(captcha);
 
                         $(this).attr("disabled", true);
-                        grecaptcha.reset()
                         $.ajax({
                             method: "PUT",
                             format: "json",
                             url: "https://hypixel-api.inventivetalent.org/api/webhook/add",
                             data: {
                                 url: $("#webhookUrl").val(),
-                                context: $("#webhookContext"),
+                                context: $("#webhookContext").val(),
                                 captcha: captcha
                             }
                         }).then(function (data) {
-                            $("#webhookUrl").val("");
                             console.log(data)
                             alert(data.msg);
-                        }).catch(function (data) {
+
                             $("#webhookUrl").val("");
+                        }).catch(function (data) {
                             console.warn(data);
                             alert(data.msg);
-                        })
+                        }).always(function () {
+                            console.log("ajax put complete");
+                            grecaptcha.reset()
+                        });
                     }
                 });
                 $("#deleteWebhookBtn").click(function (e) {
@@ -113,26 +118,30 @@
 
                     if (confirm("Are you sure you want to delete this existing webhook?")) {
                         let captcha = grecaptcha.getResponse();
+                        console.log(captcha);
 
                         $(this).attr("disabled", true);
-                        $("#webhookUrl").val("");
-                        grecaptcha.reset()
                         $.ajax({
                             method: "DELETE",
                             format: "json",
                             url: "https://hypixel-api.inventivetalent.org/api/webhook/delete",
                             data: {
                                 url: $("#webhookUrl").val(),
-                                context: $("#webhookContext"),
+                                context: $("#webhookContext").val(),
                                 captcha: captcha
                             }
                         }).then(function (data) {
                             console.log(data);
                             alert(data.msg);
+
+                            $("#webhookUrl").val("");
                         }).catch(function (data) {
                             console.warn(data);
                             alert(data.msg);
-                        })
+                        }).always(function () {
+                            console.log("ajax delete complete");
+                            grecaptcha.reset()
+                        });
                     }
                 })
             })

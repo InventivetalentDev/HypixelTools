@@ -4,6 +4,8 @@
         <title>inventivetalent's Hypixel Tools</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+
         <style>
             html, body, .the-wrapper {
                 height: 100%;
@@ -24,36 +26,40 @@
                 z-index: 2;
             }
 
-            h3{
-                margin-top:0;
-                margin-bottom:0;
+            h3 {
+                margin-top: 0;
+                margin-bottom: 0;
             }
 
-            #magma-timer:before{
+            .time {
+                font-family: "Roboto Mono", "Courier New", monospace;
+            }
+
+            #magma-timer:before {
                 content: url('img/Magma_Cube_50px.png');
                 vertical-align: middle;
                 padding: 5px;
             }
 
-            #dark-auction-timer:before{
+            #dark-auction-timer:before {
                 content: url('img/auction_50px.png');
                 vertical-align: middle;
                 padding: 5px;
             }
 
-            #bank-interest-timer:before{
+            #bank-interest-timer:before {
                 content: url('img/gold_bag_50px.png');
                 vertical-align: middle;
                 padding: 5px;
             }
 
-            #newyear-timer:before{
+            #newyear-timer:before {
                 content: url('img/Cake_50px.png');
                 vertical-align: middle;
                 padding: 5px;
             }
 
-            #spooky-timer:before{
+            #spooky-timer:before {
                 content: url('img/jack_o_lantern_50px.png');
                 vertical-align: middle;
                 padding: 5px;
@@ -81,22 +87,48 @@
                     <div class="row">
                         <h2 class="center-align">Skyblock</h2>
 
-                        <a href="./skyblock-magma-timer"><h3 id="magma-timer">Magma Boss Timer</h3></a>
+                        <a href="./skyblock-magma-timer"><h3 id="magma-timer">Magma Boss Timer <small id="time-magma-boss" class="time"></small></h3></a>
                         <br/>
                         <br/>
-                        <a href="./skyblock-dark-auction-timer"><h3 id="dark-auction-timer">Dark Auction Timer</h3></a>
+                        <a href="./skyblock-dark-auction-timer"><h3 id="dark-auction-timer">Dark Auction Timer <small id="time-dark-auction" class="time"></small></h3></a>
                         <br/>
-                        <a href="./skyblock-bank-interest-timer"><h3 id="bank-interest-timer">Bank Interest Timer</h3></a>
+                        <a href="./skyblock-bank-interest-timer"><h3 id="bank-interest-timer">Bank Interest Timer <small id="time-bank-interest" class="time"></small></h3></a>
                         <br/>
                         <br/>
-                        <a href="./skyblock-newyear-timer"><h3 id="newyear-timer">New Year's Timer</h3></a>
+                        <a href="./skyblock-newyear-timer"><h3 id="newyear-timer">New Year's Timer <small id="time-new-year" class="time"></small></h3></a>
                         <br/>
-                        <a href="./skyblock-spooky-festival-timer"><h3 id="spooky-timer">Spooky Festival Timer</h3></a>
+                        <a href="./skyblock-spooky-festival-timer"><h3 id="spooky-timer">Spooky Festival Timer <small id="time-spooky-festival" class="time"></small></h3></a>
                     </div>
                 </div>
             </div>
 
         </div>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function () {
+                let now = Date.now();
+
+                function get(path, target) {
+                    $.ajax("https://hypixel-api.inventivetalent.org/api/skyblock/" + path).done(function (data) {
+                        let m = moment.duration(data.estimate - now).asMinutes();
+                        if (m <= 1) {
+                            $(target).text("NOW");
+                        } else if (m < 10) {
+                            $(target).text("< 10mins");
+                        } else {
+                            $(target).text(moment(data.estimate).fromNow());
+                        }
+                    });
+                }
+
+                get("bosstimer/magma/estimatedSpawn", "#time-magma-boss");
+                get("darkauction/estimate", "#time-dark-auction");
+                get("bank/interest/estimate", "#time-bank-interest");
+                get("newyear/estimate", "#time-new-year");
+                get("spookyFestival/estimate", "#time-spooky-festival");
+            })
+        </script>
     </body>
 </html>

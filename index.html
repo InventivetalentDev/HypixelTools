@@ -115,8 +115,10 @@
                         let m = moment.duration(data.estimate - now).asMinutes();
                         if (m <= 1) {
                             $(target).text("NOW");
+                            $(target).css("font-weight", "bold");
                         } else if (m < 10) {
-                            $(target).text("< 10mins");
+                            $(target).text("<10mins");
+                            $(target).css("font-weight", "bold");
                         } else {
                             $(target).text(moment(data.estimate).fromNow());
                         }

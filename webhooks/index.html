@@ -15,9 +15,9 @@
             <div class="row">
                 Use this form to add a webhook to be called when the magma boss spawn is close (10 minutes prior).<br/>
                 This is mainly intended for Discord Webhooks, but you can also specify a custom URL which will be called with the estimate data in JSON format.<br/>
-                (Note that any webhook will always be called ~10mins before spawn)<br/>
+                (Note that any webhook will always be called ~10mins before spawn/start)<br/>
                 <br/>
-                <a href="https://imgur.com/a/nPsdCfj" target="_blank">Avatar Image</a>
+                <!--                <a href="https://imgur.com/a/nPsdCfj" target="_blank">Avatar Image</a>-->
             </div>
             <br/>
             <div class="row">
@@ -26,6 +26,13 @@
                         <div class="input-field col s12">
                             <input value="" id="webhookUrl" type="url" class="validate" minlength="5">
                             <label for="webhookUrl">Webhook URL</label>
+                        </div>
+                    </div>
+
+                    <div class="row" id="discordMessageContentWrapper" style="display: none;">
+                        <div class="input-field col s12">
+                            <input value="@here" id="discordMessageContent" type="text">
+                            <label for="discordMessageContent">Discord Message Content</label>
                         </div>
                     </div>
 
@@ -80,6 +87,12 @@
                     let disable = val.length < 5 || !val.startsWith("http") || !valid;
                     $("#createWebhookBtn").attr("disabled", disable);
                     $("#deleteWebhookBtn").attr("disabled", disable);
+
+                    if (val.startsWith("https://discordapp.com/api/webhooks")) {
+                        $("#discordMessageContentWrapper").show();
+                    } else {
+                        $("#discordMessageContentWrapper").hide();
+                    }
                 });
 
 
@@ -91,15 +104,27 @@
                         console.log(captcha);
 
                         $(this).attr("disabled", true);
+                        let url = $("#webhookUrl").val();
+                        let d = {
+                            url: url,
+                            context: $("#webhookContext").val(),
+                            captcha: captcha
+                        };
+                        if (url.startsWith("https://discordapp.com/api/webhooks")) {
+                            let discordMessage = $("#discordMessageContent").val();
+                            if (discordMessage && discordMessage.length > 0) {
+                                d.extraOptions = {
+                                    discord: {
+                                        message: discordMessage
+                                    }
+                                }
+                            }
+                        }
                         $.ajax({
                             method: "PUT",
                             format: "json",
                             url: "https://hypixel-api.inventivetalent.org/api/webhook/add",
-                            data: {
-                                url: $("#webhookUrl").val(),
-                                context: $("#webhookContext").val(),
-                                captcha: captcha
-                            }
+                            data: d
                         }).then(function (data) {
                             console.log(data)
                             alert(data.msg);

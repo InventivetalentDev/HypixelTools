@@ -161,11 +161,16 @@
                         $('head title', window.parent.document).text("ACTIVE | Season Of Jerry Timer // Hypixel Skyblock");
 
                         let duration = estimateData.endEstimate - now;
-                        let formattedTimer = moment.utc(duration).format("HH:mm:ss");
+                        if (duration > 0) {
+                            let formattedTimer = moment.utc(duration).format("HH:mm:ss");
 
 
-                        $("#timeEnd").text(formattedTimer).show();
-                        $("#timerTextEnd").text("It will end in about").show();
+                            $("#timeEnd").text(formattedTimer).show();
+                            $("#timerTextEnd").text("It will end in about").show();
+                        }else{
+                            $("#timeEnd").hide();
+                            $("#timerTextEnd").hide();
+                        }
                     }else {
                         $("#nextTime").text("(" + moment(estimateData.estimate).format('MMMM Do YYYY, h:mm:ss a') + ")");
 

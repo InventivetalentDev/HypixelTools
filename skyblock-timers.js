@@ -1,6 +1,6 @@
 module.exports = {
     newyear: {
-        name: "New Year's",
+        name: "New Year's Event",
         path: "skyblock-newyear-timer",
         image: "Cake.png",
         ad: "8836152197",
@@ -27,7 +27,7 @@ module.exports = {
         imageCount: 5
     },
     winter: {
-        name: "Winter",
+        name: "Season Of Jerry",
         path: "skyblock-winter-timer",
         image: "Snowball.png",
         ad: "1028315874",

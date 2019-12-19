@@ -22,6 +22,8 @@ Object.keys(timers).forEach(key => {
         timer.timerTextActive = "The %%name%% Event is currently";
     if(!timer.timerTextActiveValue)
         timer.timerTextActiveValue = "ACTIVE";
+    if(!timer.timerTextEnd)
+        timer.timerTextEnd = "It will end in about";
 
 
     let html = template;

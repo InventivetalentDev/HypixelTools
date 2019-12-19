@@ -17,9 +17,9 @@ Object.keys(timers).forEach(key => {
     timer.key = key;
 
     if (!timer.timerTextPre)
-        timer.timerTextPre = "The %%name%% Event will begin in about";
+        timer.timerTextPre = "The %%name%% will begin in about";
     if (!timer.timerTextActive)
-        timer.timerTextActive = "The %%name%% Event is currently";
+        timer.timerTextActive = "The %%name%% is currently";
     if(!timer.timerTextActiveValue)
         timer.timerTextActiveValue = "ACTIVE";
     if(!timer.timerTextEnd)

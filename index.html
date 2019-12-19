@@ -64,6 +64,12 @@
                 vertical-align: middle;
                 padding: 5px;
             }
+
+            #winter-timer:before {
+                content: url('img/Snowball_50px.png');
+                vertical-align: middle;
+                padding: 5px;
+            }
         </style>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -107,6 +113,8 @@
                                 <a href="./skyblock-bank-interest-timer"><h3 id="bank-interest-timer">Bank Interest Timer <small id="time-bank-interest" class="time"></small></h3></a>
                                 <br/>
                                 <br/>
+                                <a href="./skyblock-winter-timer"><h3 id="winter-timer">Winter Event Timer <small id="time-winter" class="time"></small></h3></a>
+                                <br/>
                                 <a href="./skyblock-newyear-timer"><h3 id="newyear-timer">New Year's Timer <small id="time-new-year" class="time"></small></h3></a>
                                 <br/>
                                 <a href="./skyblock-spooky-festival-timer"><h3 id="spooky-timer">Spooky Festival Timer <small id="time-spooky-festival" class="time"></small></h3></a>
@@ -143,6 +151,7 @@
                 get("bank/interest/estimate", "#time-bank-interest");
                 get("newyear/estimate", "#time-new-year");
                 get("spookyFestival/estimate", "#time-spooky-festival");
+                get("winter/estimate", "#time-winter");
             })
         </script>
     </body>

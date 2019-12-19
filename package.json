@@ -1,0 +1,20 @@
+{
+  "name": "hypixeltools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "skyblock-timers.js",
+  "scripts": {
+    "generate-skyblock-timers": "node scripts/skyblock-timer-generator.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InventivetalentDev/HypixelTools.git"
+  },
+  "author": "inventivetalent",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/InventivetalentDev/HypixelTools/issues"
+  },
+  "homepage": "https://github.com/InventivetalentDev/HypixelTools#readme"
+}

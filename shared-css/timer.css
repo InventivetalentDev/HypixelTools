@@ -21,3 +21,7 @@ html {
     font-size: 5rem;
     margin: 0;
 }
+
+#mainTimerContainer{
+    text-shadow: 1px 1px 8px black;
+}

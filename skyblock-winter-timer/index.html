@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Winter Timer // Hypixel Skyblock</title>
+        <title>Season Of Jerry Timer // Hypixel Skyblock</title>
         <link rel="icon" type="image/x-icon" href="favicon.ico"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/brands.min.css" integrity="sha256-u8123o+sLy8uk0Du9H0Ub+KinAoHanzGsBqDkWHY1f8=" crossorigin="anonymous"/>
 
         <meta charset="utf-8">
-        <meta name="description" content="Timer for the Hypixel Skyblock Winter Event">
+        <meta name="description" content="Timer for the Hypixel Skyblock Season Of Jerry">
         <meta name="image" content="https://hypixel.inventivetalent.org/img/Snowball.png">
 
         <link rel="stylesheet" href="../shared-css/bgimg.css"/>
@@ -81,7 +81,7 @@
 
             <div class="center-align">
                 <div class="row center-align" id="mainTimerContainer">
-                    <h5 class="center-align" id="timerText">The Winter Event will begin in about</h5>
+                    <h5 class="center-align" id="timerText">The Season Of Jerry will begin in about</h5>
                     <h1 class="center-align" id="time">00:00:00:00</h1>
                     <h4 class="center-align" id="timerTextEnd" style="display: none;">It will end in about</h4>
                     <h2 class="center-align" id="timeEnd" style="display: none;">00:00:00</h2>
@@ -156,9 +156,9 @@
 
 
                         $("#time").text("ACTIVE");
-                        $("#timerText").text("The Winter Event is currently");
+                        $("#timerText").text("The Season Of Jerry is currently");
 
-                        $('head title', window.parent.document).text("ACTIVE | Winter Timer // Hypixel Skyblock");
+                        $('head title', window.parent.document).text("ACTIVE | Season Of Jerry Timer // Hypixel Skyblock");
 
                         let duration = estimateData.endEstimate - now;
                         let formattedTimer = moment.utc(duration).format("HH:mm:ss");
@@ -180,14 +180,14 @@
                             }
 
                             $("#time").text(formattedTimer);
-                            $("#timerText").text("The Winter Event will begin in about");
+                            $("#timerText").text("The Season Of Jerry will begin in about");
 
-                            $('head title', window.parent.document).text(formattedTimer + " | Winter Timer // Hypixel Skyblock");
+                            $('head title', window.parent.document).text(formattedTimer + " | Season Of Jerry Timer // Hypixel Skyblock");
                         } else {
                             $("#time").text("ACTIVE");
-                            $("#timerText").text("The Winter Event is currently");
+                            $("#timerText").text("The Season Of Jerry is currently");
 
-                            $('head title', window.parent.document).text("ACTIVE | Winter Timer // Hypixel Skyblock");
+                            $('head title', window.parent.document).text("ACTIVE | Season Of Jerry Timer // Hypixel Skyblock");
                         }
                     }
 

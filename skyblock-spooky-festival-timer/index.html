@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/brands.min.css" integrity="sha256-u8123o+sLy8uk0Du9H0Ub+KinAoHanzGsBqDkWHY1f8=" crossorigin="anonymous"/>
 
         <meta charset="utf-8">
-        <meta name="description" content="Timer for the Hypixel Skyblock Spooky Festival Event">
+        <meta name="description" content="Timer for the Hypixel Skyblock Spooky Festival">
         <meta name="image" content="https://hypixel.inventivetalent.org/img/jack_o_lantern.png">
 
         <link rel="stylesheet" href="../shared-css/bgimg.css"/>
@@ -81,7 +81,7 @@
 
             <div class="center-align">
                 <div class="row center-align" id="mainTimerContainer">
-                    <h5 class="center-align" id="timerText">The Spooky Festival Event will begin in about</h5>
+                    <h5 class="center-align" id="timerText">The Spooky Festival will begin in about</h5>
                     <h1 class="center-align" id="time">00:00:00:00</h1>
                     <h4 class="center-align" id="timerTextEnd" style="display: none;">It will end in about</h4>
                     <h2 class="center-align" id="timeEnd" style="display: none;">00:00:00</h2>
@@ -156,7 +156,7 @@
 
 
                         $("#time").text("ACTIVE");
-                        $("#timerText").text("The Spooky Festival Event is currently");
+                        $("#timerText").text("The Spooky Festival is currently");
 
                         $('head title', window.parent.document).text("ACTIVE | Spooky Festival Timer // Hypixel Skyblock");
 
@@ -180,12 +180,12 @@
                             }
 
                             $("#time").text(formattedTimer);
-                            $("#timerText").text("The Spooky Festival Event will begin in about");
+                            $("#timerText").text("The Spooky Festival will begin in about");
 
                             $('head title', window.parent.document).text(formattedTimer + " | Spooky Festival Timer // Hypixel Skyblock");
                         } else {
                             $("#time").text("ACTIVE");
-                            $("#timerText").text("The Spooky Festival Event is currently");
+                            $("#timerText").text("The Spooky Festival is currently");
 
                             $('head title', window.parent.document).text("ACTIVE | Spooky Festival Timer // Hypixel Skyblock");
                         }

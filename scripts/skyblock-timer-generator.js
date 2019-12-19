@@ -35,7 +35,10 @@ Object.keys(timers).forEach(key => {
     }
 
     console.log("Writing " + timer.path + "/index.html");
-    fs.mkdirSync(path.join(__dirname, "..", timer.path), {recursive: true});
+    let dir =path.join(__dirname, "..", timer.path);
+    if(!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, {recursive: true});
+    }
     fs.writeFileSync(path.join(__dirname, "..", timer.path, "index.html"), html, "utf8");
 });
 

@@ -80,9 +80,11 @@
         <div id="content" class="container">
 
             <div class="center-align">
-                <div class="row center-align">
+                <div class="row center-align" id="mainTimerContainer">
                     <h5 class="center-align" id="timerText">The Spooky Festival Event will begin in about</h5>
                     <h1 class="center-align" id="time">00:00:00:00</h1>
+                    <h4 class="center-align" id="timerTextEnd" style="display: none;">It will end in about</h4>
+                    <h2 class="center-align" id="timeEnd" style="display: none;">00:00:00</h2>
                     <span id="nextTime"></span>
                     <br/>
                     <h4 class="center-align" id="suggestionMessage"></h4>
@@ -147,26 +149,47 @@
                     let daysUntilNextEvent = momentDuration.days();
                     let hoursUntilNextEvent = momentDuration.hours();
 
-                    $("#nextTime").text("(" + moment(estimateData.estimate).format('MMMM Do YYYY, h:mm:ss a') + ")");
 
-                    let duration = estimateData.estimate - now;
-                    let formattedTimer = moment.utc(duration).format("HH:mm:ss");
-                    if (duration > 0) {
-                        if (daysUntilNextEvent > 0) {// duration formatting doesn't seem to like days very much, so we're adding it this way
-                            formattedTimer = daysUntilNextEvent + ":" + formattedTimer;
-                        }
 
-                        $("#time").text(formattedTimer);
-                        $("#timerText").text("The Spooky Festival Event will begin in about");
+                    if(estimateData.active){
+                        $("#nextTime").text("");
 
-                        $('head title', window.parent.document).text(formattedTimer + " | Spooky Festival Timer // Hypixel Skyblock");
-                    } else {
+
                         $("#time").text("ACTIVE");
                         $("#timerText").text("The Spooky Festival Event is currently");
 
                         $('head title', window.parent.document).text("ACTIVE | Spooky Festival Timer // Hypixel Skyblock");
-                    }
 
+                        let duration = estimateData.endEstimate - now;
+                        let formattedTimer = moment.utc(duration).format("HH:mm:ss");
+
+
+                        $("#timeEnd").text(formattedTimer).show();
+                        $("#timerTextEnd").text("It will end in about").show();
+                    }else {
+                        $("#nextTime").text("(" + moment(estimateData.estimate).format('MMMM Do YYYY, h:mm:ss a') + ")");
+
+                        $("#timeEnd").hide();
+                        $("#timerTextEnd").hide();
+
+                        let duration = estimateData.estimate - now;
+                        let formattedTimer = moment.utc(duration).format("HH:mm:ss");
+                        if (duration > 0) {
+                            if (daysUntilNextEvent > 0) {// duration formatting doesn't seem to like days very much, so we're adding it this way
+                                formattedTimer = daysUntilNextEvent + ":" + formattedTimer;
+                            }
+
+                            $("#time").text(formattedTimer);
+                            $("#timerText").text("The Spooky Festival Event will begin in about");
+
+                            $('head title', window.parent.document).text(formattedTimer + " | Spooky Festival Timer // Hypixel Skyblock");
+                        } else {
+                            $("#time").text("ACTIVE");
+                            $("#timerText").text("The Spooky Festival Event is currently");
+
+                            $('head title', window.parent.document).text("ACTIVE | Spooky Festival Timer // Hypixel Skyblock");
+                        }
+                    }
 
                 }
 

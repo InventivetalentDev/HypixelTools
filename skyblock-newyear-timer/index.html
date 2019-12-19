@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>New Year's Timer // Hypixel Skyblock</title>
+        <title>New Year's Event Timer // Hypixel Skyblock</title>
         <link rel="icon" type="image/x-icon" href="favicon.ico"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -158,7 +158,7 @@
                         $("#time").text("ACTIVE");
                         $("#timerText").text("The New Year's Event is currently");
 
-                        $('head title', window.parent.document).text("ACTIVE | New Year's Timer // Hypixel Skyblock");
+                        $('head title', window.parent.document).text("ACTIVE | New Year's Event Timer // Hypixel Skyblock");
 
                         let duration = estimateData.endEstimate - now;
                         let formattedTimer = moment.utc(duration).format("HH:mm:ss");
@@ -182,12 +182,12 @@
                             $("#time").text(formattedTimer);
                             $("#timerText").text("The New Year's Event will begin in about");
 
-                            $('head title', window.parent.document).text(formattedTimer + " | New Year's Timer // Hypixel Skyblock");
+                            $('head title', window.parent.document).text(formattedTimer + " | New Year's Event Timer // Hypixel Skyblock");
                         } else {
                             $("#time").text("ACTIVE");
                             $("#timerText").text("The New Year's Event is currently");
 
-                            $('head title', window.parent.document).text("ACTIVE | New Year's Timer // Hypixel Skyblock");
+                            $('head title', window.parent.document).text("ACTIVE | New Year's Event Timer // Hypixel Skyblock");
                         }
                     }
 

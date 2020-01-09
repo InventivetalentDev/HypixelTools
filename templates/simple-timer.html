@@ -35,15 +35,18 @@
 
             #btnOverlayLeft {
                 position: fixed;
-                top: 5px;
-                left: 5px;
-            }
-            #btnOverlayLeft a{
-                text-decoration: none;
-                color: white;
-                mix-blend-mode: difference;
+                top: 16px;
+                left: 16px;
             }
 
+            #btnOverlayLeft a {
+                text-decoration: none;
+                color: white;
+            }
+
+            .tap-target-wave::before {
+                background-color: transparent !important;
+            }
 
             #socialButtons {
                 font-size: 32px;
@@ -74,7 +77,13 @@
         <div id="bgImage"></div>
 
         <div id="btnOverlayLeft">
-            <a href="https://hypixel.inventivetalent.org"><i class="material-icons">arrow_back</i></a>
+            <a href="https://hypixel.inventivetalent.org" class="" id="backBtn"><i class="material-icons">arrow_back</i></a>
+
+            <div class="tap-target teal darken-1" data-target="backBtn">
+                <div class="tap-target-content">
+                    <h5>Check out the Other Tools! :)</h5>
+                </div>
+            </div>
         </div>
 
         <div id="content" class="container">
@@ -139,6 +148,11 @@
         <script>
             $(document).ready(function () {
 
+                setTimeout(function () {
+                    $(".tap-target").tapTarget();
+
+                }, 2000);
+
                 let estimateData = {};
 
                 function tickTimer() {
@@ -150,8 +164,7 @@
                     let hoursUntilNextEvent = momentDuration.hours();
 
 
-
-                    if(estimateData.active){
+                    if (estimateData.active) {
                         $("#nextTime").text("");
 
 
@@ -167,11 +180,11 @@
 
                             $("#timeEnd").text(formattedTimer).show();
                             $("#timerTextEnd").text("%%timerTextEnd%%").show();
-                        }else{
+                        } else {
                             $("#timeEnd").hide();
                             $("#timerTextEnd").hide();
                         }
-                    }else {
+                    } else {
                         $("#nextTime").text("(" + moment(estimateData.estimate).format('MMMM Do YYYY, h:mm:ss a') + ")");
 
                         $("#timeEnd").hide();

@@ -38,13 +38,14 @@
                 top: 16px;
                 left: 16px;
             }
-            #btnOverlayLeft a{
+
+            #btnOverlayLeft a {
                 text-decoration: none;
                 color: white;
             }
 
-            .tap-target-wave::before{
-                background-color:transparent !important;
+            .tap-target-wave::before {
+                background-color: transparent !important;
             }
 
             #socialButtons {
@@ -150,7 +151,17 @@
                 setTimeout(function () {
                     $(".tap-target").tapTarget();
 
+                    if ((getCookie("backButtonInfo") || "") !== "true") {
+                        if (Math.random() < 0.7) {
+                            $(".tap-target").tapTarget("open");
+                            setCookie("backButtonInfo", "true", 5);
+                        }
+                    }
                 }, 2000);
+
+                $("#backBtn").on("click",function () {
+                    setCookie("backButtonInfo", "true", 30);
+                });
 
                 let estimateData = {};
 
@@ -163,8 +174,7 @@
                     let hoursUntilNextEvent = momentDuration.hours();
 
 
-
-                    if(estimateData.active){
+                    if (estimateData.active) {
                         $("#nextTime").text("");
 
 
@@ -180,11 +190,11 @@
 
                             $("#timeEnd").text(formattedTimer).show();
                             $("#timerTextEnd").text("It will end in about").show();
-                        }else{
+                        } else {
                             $("#timeEnd").hide();
                             $("#timerTextEnd").hide();
                         }
-                    }else {
+                    } else {
                         $("#nextTime").text("(" + moment(estimateData.estimate).format('MMMM Do YYYY, h:mm:ss a') + ")");
 
                         $("#timeEnd").hide();
@@ -230,6 +240,31 @@
                 setInterval(refreshEstimate, parseInt("60000"));
 
             });
+
+            // https://www.w3schools.com/js/js_cookies.asp
+            function setCookie(cname, cvalue, exdays) {
+                let d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                let expires = "expires=" + d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            // https://www.w3schools.com/js/js_cookies.asp
+            function getCookie(cname) {
+                let name = cname + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
 
         </script>
     </body>

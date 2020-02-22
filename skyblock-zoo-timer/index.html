@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Traveling Zoo Event Timer // Hypixel Skyblock</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/fontawesome.min.css" integrity="sha256-AaQqnjfGDRZd/lUp0Dvy7URGOyRsh8g9JdWUkyYxNfI=" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/brands.min.css" integrity="sha256-u8123o+sLy8uk0Du9H0Ub+KinAoHanzGsBqDkWHY1f8=" crossorigin="anonymous"/>
+
+        <meta charset="utf-8">
+        <meta name="description" content="Timer for the Hypixel Skyblock Traveling Zoo Event">
+        <meta name="image" content="https://hypixel.inventivetalent.org/img/cat.png">
+
+        <link rel="stylesheet" href="../shared-css/bgimg.css"/>
+        <link rel="stylesheet" href="../shared-css/timer.css"/>
+        <style>
+            body, .modal-content {
+                background-color: rgb(85, 77, 58);
+            }
+
+            body, input {
+                color: #e9e9e9;
+            }
+
+            .btn {
+                margin: 3px;
+            }
+
+            #btnOverlay {
+                position: fixed;
+                top: 5px;
+                right: 5px;
+            }
+
+            #btnOverlayLeft {
+                position: fixed;
+                top: 16px;
+                left: 16px;
+            }
+
+            #btnOverlayLeft a {
+                text-decoration: none;
+                color: white;
+            }
+
+            .tap-target-wave::before {
+                background-color: transparent !important;
+            }
+
+            #socialButtons {
+                font-size: 32px;
+            }
+
+            #socialButtons > a {
+                margin-left: 4px;
+            }
+
+            #onesignal-bell-container {
+                z-index: 5000 !important;
+            }
+        </style>
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-2604356629473365",
+                enable_page_level_ads: true
+            });
+        </script>
+    </head>
+    <body>
+        <div id="bgImage"></div>
+
+        <div id="btnOverlayLeft">
+            <a href="https://hypixel.inventivetalent.org" class="" id="backBtn"><i class="material-icons">arrow_back</i></a>
+
+            <div class="tap-target teal darken-1" data-target="backBtn">
+                <div class="tap-target-content">
+                    <h5>Check out the Other Tools! :)</h5>
+                </div>
+            </div>
+        </div>
+
+        <div id="content" class="container">
+
+            <div class="center-align">
+                <div class="row center-align" id="mainTimerContainer">
+                    <h5 class="center-align" id="timerText">The Traveling Zoo Event will begin in about</h5>
+                    <h1 class="center-align" id="time">00:00:00:00</h1>
+                    <h6 class="center-align" id="timerTextEnd" style="display: none;">It will end in about</h6>
+                    <h2 class="center-align" id="timeEnd" style="display: none;">00:00:00</h2>
+                    <span id="nextTime"></span>
+                    <br/>
+                    <h4 class="center-align" id="suggestionMessage"></h4>
+                    <br/>
+                    <br/>
+                    <noscript>
+                        The timer won't work while javascript is disabled.<br/>
+                    </noscript>
+                </div>
+
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:700px;height:150px"
+                     data-ad-client="ca-pub-2604356629473365"
+                     data-ad-slot="9803173293"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+        </div>
+
+        <span style="position: fixed; bottom: 4px; left: 4px; color: #cacaca;">Created by <a target="_blank" href="https://inventivetalent.org/?utm_source=hypixel_zoo_timer">inventivetalent</a> <span id="d"></span></span>
+
+
+        <script>
+            if (location.host !== "hypixel.inventivetalent.org") {
+                window.location = "https://hypixel.inventivetalent.org/skyblock-zoo-timer";
+            }
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+
+        <script>
+            window.DOP_config = {
+                links: {
+                    paypal: "https://paypal.me/inventivetalent",
+                    patreon: "https://patreon.com/inventivetalent"
+                },
+                enableAnalytics: true
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/gh/InventivetalentDev/DonationPopup@master/DonationPopup.min.js"></script>
+
+        <script>
+            window.ABB_config = {
+                enableAnalytics: true
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/gh/InventivetalentDev/AdBlockBanner@master/abb.min.js"></script>
+
+        <script>
+            let bgImgCount = parseInt("1");
+        </script>
+        <script src="../shared-js/bgimg.js"></script>
+
+        <script>
+            $(document).ready(function () {
+
+                setTimeout(function () {
+                    $(".tap-target").tapTarget();
+
+                    if ((getCookie("backButtonInfo") || "") !== "true") {
+                        if (Math.random() < 0.7) {
+                            $(".tap-target").tapTarget("open");
+                            setCookie("backButtonInfo", "true", 5);
+                        }
+                    }
+                }, 2000);
+
+                $("#backBtn").on("click",function () {
+                    setCookie("backButtonInfo", "true", 30);
+                });
+
+                let estimateData = {};
+
+                function tickTimer() {
+                    let now = Date.now();
+
+                    let momentDuration = moment.duration(estimateData.estimate - now);
+
+                    let daysUntilNextEvent = momentDuration.days();
+                    let hoursUntilNextEvent = momentDuration.hours();
+
+
+                    if (estimateData.active) {
+                        $("#nextTime").text("");
+
+
+                        $("#time").text("ACTIVE");
+                        $("#timerText").text("The Traveling Zoo Event is currently");
+
+                        $('head title', window.parent.document).text("ACTIVE | Traveling Zoo Event Timer // Hypixel Skyblock");
+
+                        let duration = estimateData.endEstimate - now;
+                        if (duration > 0) {
+                            let formattedTimer = moment.utc(duration).format("HH:mm:ss");
+
+
+                            $("#timeEnd").text(formattedTimer).show();
+                            $("#timerTextEnd").text("It will end in about").show();
+                        } else {
+                            $("#timeEnd").hide();
+                            $("#timerTextEnd").hide();
+                        }
+                    } else {
+                        $("#nextTime").text("(" + moment(estimateData.estimate).format('MMMM Do YYYY, h:mm:ss a') + ")");
+
+                        $("#timeEnd").hide();
+                        $("#timerTextEnd").hide();
+
+                        let duration = estimateData.estimate - now;
+                        let formattedTimer = moment.utc(duration).format("HH:mm:ss");
+                        if (duration > 0) {
+                            if (daysUntilNextEvent > 0) {// duration formatting doesn't seem to like days very much, so we're adding it this way
+                                formattedTimer = daysUntilNextEvent + ":" + formattedTimer;
+                            }
+
+                            $("#time").text(formattedTimer);
+                            $("#timerText").text("The Traveling Zoo Event will begin in about");
+
+                            $('head title', window.parent.document).text(formattedTimer + " | Traveling Zoo Event Timer // Hypixel Skyblock");
+                        } else {
+                            $("#time").text("ACTIVE");
+                            $("#timerText").text("The Traveling Zoo Event is currently");
+
+                            $('head title', window.parent.document).text("ACTIVE | Traveling Zoo Event Timer // Hypixel Skyblock");
+                        }
+                    }
+
+                }
+
+
+                let timerId;
+
+                function refreshEstimate() {
+                    $.ajax("https://hypixel-api.inventivetalent.org/api/skyblock/zoo/estimate").done(function (data) {
+                        console.log(data);
+                        estimateData = data;
+
+
+                        tickTimer();
+                        clearInterval(timerId);
+                        timerId = setInterval(tickTimer, 1000);// tick every second
+                    });
+                }
+
+                refreshEstimate();
+                setInterval(refreshEstimate, parseInt("60000"));
+
+            });
+
+            // https://www.w3schools.com/js/js_cookies.asp
+            function setCookie(cname, cvalue, exdays) {
+                let d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                let expires = "expires=" + d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            // https://www.w3schools.com/js/js_cookies.asp
+            function getCookie(cname) {
+                let name = cname + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+        </script>
+    </body>
+</html>

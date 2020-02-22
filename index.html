@@ -62,6 +62,12 @@
                 padding: 5px;
             }
 
+            #zoo-timer:before {
+                content: url('img/cat_50px.png');
+                vertical-align: middle;
+                padding: 5px;
+            }
+
             #spooky-timer:before {
                 content: url('img/jack_o_lantern_50px.png');
                 vertical-align: middle;
@@ -120,6 +126,8 @@
                         <br/>
                         <a href="./skyblock-newyear-timer"><h3 id="newyear-timer">New Year's Timer <small id="time-new-year" class="time"></small></h3></a>
                         <br/>
+                        <a href="./skyblock-zoo-timer"><h3 id="zoo-timer">Traveling Zoo Timer <small id="time-zoo" class="time"></small></h3></a>
+                        <br/>
                         <a href="./skyblock-spooky-festival-timer"><h3 id="spooky-timer">Spooky Festival Timer <small id="time-spooky-festival" class="time"></small></h3></a>
                         <br/>
                     </div>
@@ -156,6 +164,7 @@
                 get("darkauction/estimate", "#time-dark-auction");
                 get("bank/interest/estimate", "#time-bank-interest");
                 get("newyear/estimate", "#time-new-year");
+                get("zoo/estimate", "#time-zoo");
                 get("spookyFestival/estimate", "#time-spooky-festival");
                 get("winter/estimate", "#time-winter");
             })

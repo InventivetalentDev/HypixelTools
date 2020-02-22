@@ -1,4 +1,13 @@
 module.exports = {
+    zoo:{
+      name: "Traveling Zoo Event",
+      path: "skyblock-zoo-timer",
+      image: "cat.png",
+      ad: "9803173293",
+      endpoint: "skyblock/zoo/estimate",
+      refreshInterval: 60000,
+      imageCount: 1
+    },
     newyear: {
         name: "New Year's Event",
         path: "skyblock-newyear-timer",

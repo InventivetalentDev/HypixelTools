@@ -75,6 +75,12 @@
             }
 
             #winter-timer:before {
+                content: url('img/jerry_santa_50px.png');
+                vertical-align: middle;
+                padding: 5px;
+            }
+
+            #winter-timer:before {
                 content: url('img/Snowball_50px.png');
                 vertical-align: middle;
                 padding: 5px;
@@ -126,6 +132,8 @@
                         <br/>
                         <a href="./skyblock-spooky-festival-timer"><h3 id="spooky-timer">Spooky Festival Timer <small id="time-spooky-festival" class="time"></small></h3></a>
                         <br/>
+                        <a href="./skyblock-jerry-workshop-timer"><h3 id="jerry-timer">Jerry's Workshop Timer <small id="time-jerry" class="time"></small></h3></a>
+                        <br/>
                         <a href="./skyblock-winter-timer"><h3 id="winter-timer">Winter Event Timer <small id="time-winter" class="time"></small></h3></a>
                         <br/>
                         <a href="./skyblock-newyear-timer"><h3 id="newyear-timer">New Year's Timer <small id="time-new-year" class="time"></small></h3></a>
@@ -167,6 +175,7 @@
                 get("zoo/estimate", "#time-zoo");
                 get("spookyFestival/estimate", "#time-spooky-festival");
                 get("winter/estimate", "#time-winter");
+                get("jerryWorkshop/estimate", "#time-jerry");
             })
         </script>
     </body>

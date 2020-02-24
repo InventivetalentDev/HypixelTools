@@ -44,6 +44,19 @@ module.exports = {
         refreshInterval: 60000,
         imageCount: 3
     },
+    jerryWorkshop: {
+        name: "Jerry's Workshop",
+        path: "skyblock-jerry-workshop-timer",
+        image: "jerry_santa.png",
+        ad: "7360363858",
+        endpoint: "skyblock/jerryWorkshop/estimate",
+        refreshInterval: 60000,
+        imageCount: 1,
+        timerTextPre: "%%name%% will open in about",
+        timerTextActive: "%%name%% is currently",
+        timerTextActiveValue: "OPEN",
+        timerTextEnd: "It will close in about"
+    },
     interest: {
         name: "Bank Interest",
         path: "skyblock-bank-interest-timer",

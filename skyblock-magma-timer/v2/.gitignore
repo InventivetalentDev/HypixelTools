@@ -1,0 +1,5 @@
+*.idea/
+*.iws
+
+/node_modules/
+vars.js

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calendar // Hypixel Skyblock</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/fontawesome.min.css" integrity="sha256-AaQqnjfGDRZd/lUp0Dvy7URGOyRsh8g9JdWUkyYxNfI=" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/brands.min.css" integrity="sha256-u8123o+sLy8uk0Du9H0Ub+KinAoHanzGsBqDkWHY1f8=" crossorigin="anonymous"/>
+
+        <meta charset="utf-8">
+        <meta name="description" content="Calendar for Hypixel Skyblock">
+        <meta name="image" content="https://hypixel.inventivetalent.org/img/clock.png">
+
+        <link rel="stylesheet" href="../shared-css/timer.css"/>
+        <link rel="stylesheet" href="../shared-css/bgimg.css"/>
+        <style>
+            body, .modal-content {
+                background-color: rgb(85, 77, 58);
+            }
+
+            body, input {
+                color: #e9e9e9;
+            }
+
+            .btn {
+                margin: 3px;
+            }
+
+            #btnOverlay {
+                position: fixed;
+                top: 5px;
+                right: 5px;
+            }
+
+            #btnOverlayLeft {
+                position: fixed;
+                top: 16px;
+                left: 16px;
+            }
+
+            #btnOverlayLeft a {
+                text-decoration: none;
+                color: white;
+            }
+
+            .tap-target-wave::before {
+                background-color: transparent !important;
+            }
+
+            #socialButtons {
+                font-size: 32px;
+            }
+
+            #socialButtons > a {
+                margin-left: 4px;
+            }
+
+            #content {
+                max-width: 90vw;
+                width: 90vw;
+                height: 90vh;
+                overflow: hidden;
+            }
+
+            #calendar-container {
+                height: 50vh;
+            }
+
+            .calendar-cell {
+                width: 14% !important;
+                height: 100%;
+                padding: 2px !important;
+            }
+
+            .calendar-datetime-display {
+                width: 56% !important;
+                height: 100%;
+                padding: 2px !important;
+                text-align: center;
+                font-size: 2rem;
+                text-shadow: black 1px 1px 6px;
+            }
+
+            .calendar-datetime-display .datetime-segment {
+                display: inline-block;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding-top: 16px;
+            }
+
+            .calendar-cell-inner {
+                background-color: rgba(1, 1, 1, 0.5);
+                height: 100%;
+                padding: 5px;
+                position: relative;
+            }
+
+            .calendar-row {
+                height: 20% !important;
+            }
+
+            #theLine { /*TM*/
+                left: 0;
+                top: 0;
+                position: absolute;
+                height: 100%;
+                width: 2px;
+                max-width: 2px;
+                background-color: rgba(255, 9, 0, 0.5);
+                transition: left linear 4s;
+                z-index: 5;
+            }
+        </style>
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-2604356629473365",
+                enable_page_level_ads: true
+            });
+        </script>
+    </head>
+    <body>
+        <div id="bgImage"></div>
+
+        <div id="btnOverlayLeft">
+            <a href="https://hypixel.inventivetalent.org" class="" id="backBtn"><i class="material-icons">arrow_back</i></a>
+
+            <div class="tap-target teal darken-1" data-target="backBtn">
+                <div class="tap-target-content">
+                    <h5>Check out the Other Tools! :)</h5>
+                </div>
+            </div>
+        </div>
+
+        <div id="content" class="container">
+
+            <div class="row">
+                <div class="row">
+                    <!--                    <div>-->
+                    <!--                        Year <span id="year">00</span>&nbsp;&nbsp;<span id="month">spring</span>&nbsp;<span id="day">00</span><span id="day_suffix">th</span>&nbsp;&nbsp;<span id="hour">00</span>:<span id="minute">00</span><span id="ampm">am</span>-->
+                    <!--                    </div>-->
+                    <div id="calendar-container">
+                        <!-- generated -->
+                    </div>
+                </div>
+
+                <div class="row center-align">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- calendar banner -->
+                    <ins class="adsbygoogle"
+                         style="display:inline-block;width:700px;height:150px"
+                         data-ad-client="ca-pub-2604356629473365"
+                         data-ad-slot="6107482545"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
+
+        </div>
+
+        <span style="position: fixed; bottom: 4px; left: 4px; color: #cacaca;">Created by <a target="_blank" href="https://inventivetalent.org/?utm_source=hypixel_calendar">inventivetalent</a> <span id="d"></span></span>
+
+
+        <!--        <script>-->
+        <!--            if (location.host !== "hypixel.inventivetalent.org") {-->
+        <!--                window.location = "https://hypixel.inventivetalent.org/skyblock-calendar";-->
+        <!--            }-->
+        <!--        </script>-->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+
+        <script>
+            window.DOP_config = {
+                links: {
+                    paypal: "https://paypal.me/inventivetalent",
+                    patreon: "https://patreon.com/inventivetalent"
+                },
+                enableAnalytics: true
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/gh/InventivetalentDev/DonationPopup@master/DonationPopup.min.js"></script>
+
+        <script>
+            window.ABB_config = {
+                enableAnalytics: true
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/gh/InventivetalentDev/AdBlockBanner@master/abb.min.js"></script>
+
+        <script>
+            let bgImgCount = parseInt("3");
+        </script>
+        <script src="../shared-js/bgimg.js"></script>
+
+        <script>
+            $(document).ready(function () {
+
+                function makeCalendarGrid() {
+                    $("#calendar-container").empty();
+
+                    let cnt = 0;
+                    for (let r = 0; r < 5; r++) {
+                        $("#calendar-container").append('<div class="row calendar-row" id="calendar-row-' + (r + 1) + '"></div>');
+                        for (let c = 0; c < 7; c++) {
+                            let $row = $("#calendar-row-" + (r + 1));
+                            if (cnt >= 31) {
+                                $row.append('<div class="calendar-cell calendar-datetime-display col s8"><div class="row">' +
+                                    '<div class="datetime-segment"><span id="month">spring</span>&nbsp;<span id="day">00</span><span id="day_suffix">th</span></div>' +
+                                    '<div class="datetime-segment"><span id="hour">00</span>:<span id="minute">00</span><span id="ampm">am</span></div>' +
+                                    '<div class="datetime-segment">Year <span id="year">00</span></div>' +
+                                    '</div></div>')
+                                break;
+                            }
+                            $row.append('<div class="calendar-cell col s2">' +
+                                ' <div class="calendar-cell-inner" id="calendar-cell-' + (++cnt) + '">' +
+                                '  <span class="calendar-cell-date">' + cnt + dateSuffix(cnt) + '</span><span class="calendar-cell-date-countdown"></span>' +
+                                '  <div class="calendar-cell-events"></div>' +
+                                ' </div>' +
+                                '</div>')
+                        }
+                    }
+                }
+
+                makeCalendarGrid();
+
+                let calendarData;
+
+                let prevYear;
+                let prevMonth;
+                let prevDay;
+                let prevHour;
+
+                function tick() {
+                    if (!calendarData) return;
+
+                    let unix = Math.floor(Date.now() / 1000);
+                    let secondsSinceLastLog = unix - calendarData.lastLog.time;
+                    console.log("SecondsSinceLastLog: " + secondsSinceLastLog);
+
+                    let year = calendarData.lastLog.year;
+                    let month = calendarData.lastLog.month;
+                    let day = calendarData.lastLog.day;
+                    let hour = calendarData.lastLog.hour;
+                    let minute = calendarData.lastLog.minute;
+
+                    let secondsPerYear = calendarData.real.SECONDS_PER_MONTH * 12;
+                    console.log("secondsPerYear " + secondsPerYear);
+                    let secondsPerMonth = calendarData.real.SECONDS_PER_MONTH;
+                    console.log("secondsPerMonth " + secondsPerMonth);
+                    let secondsPerDay = calendarData.real.SECONDS_PER_DAY;
+                    console.log("secondsPerDay " + secondsPerDay)
+                    let secondsPerHour = calendarData.real.SECONDS_PER_HOUR;
+                    console.log("secondsPerHour " + secondsPerHour)
+
+                    let yearDiff = Math.floor(secondsSinceLastLog / secondsPerYear);
+                    console.log("yearDiff: " + yearDiff);
+                    secondsSinceLastLog -= yearDiff * secondsPerYear;
+                    console.log(secondsSinceLastLog);
+                    year += yearDiff; // the only thing without bounds
+
+                    let monthDiff = Math.floor(secondsSinceLastLog / secondsPerMonth) % 12;
+                    console.log("monthDiff: " + monthDiff);
+                    secondsSinceLastLog -= monthDiff * secondsPerMonth;
+                    console.log(secondsSinceLastLog);
+                    month = (month + monthDiff) % 12;
+
+
+                    let dayDiff = Math.floor(secondsSinceLastLog / secondsPerDay) % 32;
+                    console.log("dayDiff: " + dayDiff);
+                    secondsSinceLastLog -= dayDiff * secondsPerDay;
+                    console.log(secondsSinceLastLog);
+                    day = (day + dayDiff) % 32;
+
+
+                    let hourDiff = Math.floor(secondsSinceLastLog / secondsPerHour) % 24;
+                    console.log("hourDiff: " + hourDiff);
+                    secondsSinceLastLog -= hourDiff * secondsPerHour;
+                    console.log(secondsSinceLastLog);
+                    hour = (hour + hourDiff) % 24;
+
+                    if (hour < 6) { // hacky fix for the day rolling over at 6am instead of midnight
+                        if (day < 31) {
+                            day += 1;
+                        } else {
+                            day = 1;
+                            month += 1;
+                        }
+                    }
+
+
+                    let minuteDiff = Math.floor(secondsSinceLastLog / calendarData.real.SECONDS_PER_MINUTE) % 60;
+                    console.log("minuteDiff: " + minuteDiff);
+                    secondsSinceLastLog -= minuteDiff * calendarData.real.SECONDS_PER_MINUTE;
+                    console.log(secondsSinceLastLog);
+                    minute = (minute + minuteDiff) % 60;
+                    let rawMinute = minute;
+
+                    minute = (Math.round(minute / 5) * 5) % 60;
+
+
+                    console.log("Leftover seconds: " + secondsSinceLastLog);
+
+                    let monthName = calendarData.months["" + month];
+
+                    let dayStr = "" + day;
+
+
+                    let bgImg = "stone";
+                    if (monthName.includes("winter")) {
+                        bgImg = "winter";
+                    } else if (monthName.includes("autumn")) {
+                        bgImg = "autumn";
+                    } else if (monthName.includes("summer")) {
+                        bgImg = "summer";
+                    } else if (monthName.includes("spring")) {
+                        bgImg = "spring";
+                    }
+
+                    $("#bgImage").css("background-image", "url(img/" + bgImg + ".jpg)");
+
+                    if (month !== prevMonth) {
+                        makeCalendarGrid();
+                        populateMonthEvents(year, month);
+                    }
+
+                    if (hour !== prevHour) {
+                        for (let i = 0; i <= 31; i++) {
+                            let until = ((i - day) * calendarData.real.MINUTES_PER_DAY * 60) - (hour * calendarData.real.SECONDS_PER_HOUR);
+                            /*if (until > 10000) {
+                                break;
+                            } else*/
+                            if (until > 0) {
+                                $("#calendar-cell-" + i + " .calendar-cell-date-countdown").text(" (in " + Math.floor(until / 60) + "min)")
+                            } else {
+                                $("#calendar-cell-" + i + " .calendar-cell-date-countdown").text("");
+                            }
+                        }
+                    }
+
+
+                    $("#year").text("" + year);
+                    $("#month").text(monthName);
+                    $("#day").text(dayStr);
+                    $("#day_suffix").text(dateSuffix(day));
+                    $("#hour").text("" + doublePad(hour > 12 ? hour - 12 : hour));
+                    $("#minute").text("" + doublePad(minute));
+                    $("#ampm").text(hour >= 12 ? "pm" : "am");
+
+
+                    let currentCell = $("#calendar-cell-" + day);
+                    if (currentCell) {
+                        if (day !== prevDay) {
+                            $("#theLine").remove();
+                            currentCell.append('<div id="theLine"></div>');
+                        }
+                        $("#theLine").css("left", ((hour / 24 * 100) + (minute / 60 / 24 * 100)) + "%");
+                    }
+
+
+                    prevYear = year;
+                    prevMonth = month;
+                    prevDay = day;
+                    prevHour = hour;
+                }
+
+                setInterval(tick, 5000);
+
+
+                function populateMonthEvents(year, month) {
+                    let monthName = calendarData.months["" + month];
+
+                    let yearlyEvents = calendarData.events.yearly || [];
+                    for (let yearlyEvent of yearlyEvents) {
+                        for (let yearlyWhen of yearlyEvent.when) {
+                            if (yearlyWhen.hasOwnProperty("start") && yearlyWhen.hasOwnProperty("end")) {
+                                if (yearlyWhen.start.month === monthName) {
+                                    $("#calendar-cell-" + yearlyWhen.start.day + " .calendar-cell-events").append('<span class="event-start-' + yearlyEvent.key + '">' + yearlyEvent.name + ' starts</span><br/>');
+                                }
+                                if (yearlyWhen.end.month === monthName) {
+                                    $("#calendar-cell-" + yearlyWhen.end.day + " .calendar-cell-events").append('<span class="event-end-' + yearlyEvent.key + '">' + yearlyEvent.name + ' ends</span><br/>');
+                                }
+                            }
+                        }
+                    }
+
+                    let monthlyEvents = calendarData.events.monthly || [];
+                    for (let monthlyEvent of monthlyEvents) {
+                        for (let monthlyWhen of monthlyEvent.when) {
+                            if (monthlyWhen.hasOwnProperty("start") || monthlyWhen.hasOwnProperty("end")) {
+                                if (monthlyWhen.hasOwnProperty("start"))
+                                    $("#calendar-cell-" + monthlyWhen.start.day + " .calendar-cell-events").append('<span class="event-start-' + monthlyEvent.key + '">' + monthlyEvent.name + ' starts</span><br/>');
+                                if (monthlyWhen.hasOwnProperty("end"))
+                                    $("#calendar-cell-" + monthlyWhen.end.day + " .calendar-cell-events").append('<span class="event-end-' + monthlyEvent.key + '">' + monthlyEvent.name + ' ends</span><br/>');
+                            } else {
+                                $("#calendar-cell-" + monthlyWhen.day + " .calendar-cell-events").append('<span class="event-occurrence-' + monthlyEvent.key + '">' + monthlyEvent.name + '</span><br/>');
+                            }
+                        }
+                    }
+                }
+
+
+                function update() {
+                    $.ajax("https://hypixel-api.inventivetalent.org/api/skyblock/calendar").done(function (data) {
+                        calendarData = data;
+                        tick();
+                    }).fail(function (e) {
+                        console.warn(e);
+                        console.warn("Failed to get calendar info, trying again in 30 seconds");
+                        setTimeout(() => update(), 30000);
+                    })
+                }
+
+                update();
+
+            });
+
+            function doublePad(num) {
+                num = "" + num;
+                if (num.length === 1) {
+                    return "0" + num;
+                }
+                return num;
+            }
+
+            function dateSuffix(date) {
+                let dateStr = "" + date;
+                if (date === 11 || date === 12 || date === 13) return "th";
+                return dateStr.endsWith("1") ? "st" : dateStr.endsWith("2") ? "nd" : dateStr.endsWith("3") ? "rd" : "th"
+            }
+
+            // https://www.w3schools.com/js/js_cookies.asp
+            function setCookie(cname, cvalue, exdays) {
+                let d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                let expires = "expires=" + d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            // https://www.w3schools.com/js/js_cookies.asp
+            function getCookie(cname) {
+                let name = cname + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Auction House Tracker // Hypixel Skyblock</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/fontawesome.min.css" integrity="sha256-AaQqnjfGDRZd/lUp0Dvy7URGOyRsh8g9JdWUkyYxNfI=" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/brands.min.css" integrity="sha256-u8123o+sLy8uk0Du9H0Ub+KinAoHanzGsBqDkWHY1f8=" crossorigin="anonymous"/>
+
+        <meta charset="utf-8">
+        <meta name="description" content="Price Tracker for the Hypixel Skyblock Auction House">
+        <meta name="image" content="https://hypixel.inventivetalent.org/img/auction.png">
+
+        <style>
+            body, .modal-content {
+            }
+
+            body, input {
+            }
+
+            .btn {
+                margin: 3px;
+            }
+
+            #btnOverlay {
+                position: fixed;
+                top: 5px;
+                right: 5px;
+            }
+
+            #btnOverlayLeft {
+                position: fixed;
+                top: 5px;
+                left: 5px;
+            }
+
+
+            #socialButtons {
+                font-size: 32px;
+            }
+
+            #socialButtons > a {
+                margin-left: 4px;
+            }
+
+            #onesignal-bell-container {
+                z-index: 5000 !important;
+            }
+        </style>
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-2604356629473365",
+                enable_page_level_ads: true
+            });
+        </script>
+    </head>
+    <body>
+        <div id="btnOverlayLeft">
+            <a href="https://hypixel.inventivetalent.org"><i class="material-icons">arrow_back</i></a>
+        </div>
+
+        <div id="content" class="container">
+
+            <div>
+                <div class="row center-align">
+                    <br/>
+                    <div id="priceChart">
+                        Select an item for more stats!
+                    </div>
+                </div>
+                <div class="row" style="height: 50vh; overflow-y: scroll;">
+                    <!--                    <ul class="collection" id="items-collection">-->
+                    <!--                        &lt;!&ndash;                        <li class="collection-item avatar">&ndash;&gt;-->
+                    <!--                        &lt;!&ndash;                            <img src="https://via.placeholder.com/150" alt="" class="circle">&ndash;&gt;-->
+                    <!--                        &lt;!&ndash;                            <span class="title">Title</span>&ndash;&gt;-->
+                    <!--                        &lt;!&ndash;                            <p>First Line <br>&ndash;&gt;-->
+                    <!--                        &lt;!&ndash;                                Second Line&ndash;&gt;-->
+                    <!--                        &lt;!&ndash;                            </p>&ndash;&gt;-->
+                    <!--                        &lt;!&ndash;                        </li>&ndash;&gt;-->
+                    <!--                    </ul>-->
+
+                    <table class="highlight">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Lowest Bid</th>
+                            <th>Average Bid</th>
+                            <th>Highest Bid</th>
+                        </tr>
+                        </thead>
+                        <tbody id="items-table">
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
+                <!--                &lt;!&ndash; DarkAuctionTimer bottom banner &ndash;&gt;-->
+                <!--                <ins class="adsbygoogle"-->
+                <!--                     style="display:inline-block;width:700px;height:100px"-->
+                <!--                     data-ad-client="ca-pub-2604356629473365"-->
+                <!--                     data-ad-slot="4893037759"></ins>-->
+                <!--                <script>-->
+                <!--                    (adsbygoogle = window.adsbygoogle || []).push({});-->
+                <!--                </script>-->
+            </div>
+
+        </div>
+
+        <span style="position: fixed; bottom: 4px; left: 4px; color: #bbbbbb;">Created by <a target="_blank" href="https://inventivetalent.org/?utm_source=hypixel_auction_tracker">inventivetalent</a> <span id="d"></span></span>
+
+
+        <div id="infoModal" class="modal">
+            <div class="modal-content">
+                <h4>About</h4>
+                <p>
+                    <br/>
+                </p>
+                <div class="divider"></div>
+                <br/>
+                <div class="row">
+                    <!--                    <form class="col s12">-->
+                    <!--                        <div class="row">-->
+                    <!--                            <div class="input-field col s12 m6">-->
+                    <!--                                <span>Clicking the red bell in the bottom-right will send you a notification even if your browser is closed!</span>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </form>-->
+
+                    <a href="https://hypixel.inventivetalent.org/webhooks">Manage Webhooks</a>
+                </div>
+
+                <div class="divider"></div>
+                <br/>
+                <div class="row">
+                    <div class="col s6">
+                        <span id="socialButtons">
+                            <a href="https://twitter.com/Inventivtalent"><i class="fab fa-twitter"></i></a>
+                            <a href="https://yeleha.co/discord"><i class="fab fa-discord"></i></a>
+                            <a href="https://donation.inventivetalent.org/"><i class="fab fa-patreon"></i></a>
+                        </span>
+                    </div>
+                    <div class="col s6 right-align">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!--        <script>-->
+        <!--            if (location.host !== "hypixel.inventivetalent.org") {-->
+        <!--                window.location = "https://hypixel.inventivetalent.org/skyblock-auction-tracker";-->
+        <!--            }-->
+        <!--        </script>-->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/timeline.js"></script>
+
+        <script>
+            window.DOP_config = {
+                links: { // Replace with your links
+                    paypal: "https://paypal.me/inventivetalent",
+                    patreon: "https://patreon.com/inventivetalent"
+                },
+                enableAnalytics: true
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/gh/InventivetalentDev/DonationPopup@master/DonationPopup.min.js"></script>
+
+
+        <script>
+            $(document).ready(function () {
+
+                let items = {};
+
+                function queryItems() {
+                    $.ajax("https://hypixel-api.inventivetalent.org/api/skyblock/auction/items").done(function (data) {
+                        if (data.success) {
+                            items = data.items;
+
+                            makeItemsList();
+                        }
+                    })
+                }
+
+                queryItems();
+
+                function makeItemsList() {
+                    $("#items-collection").empty();
+
+                    let itemList = Object.values(items);
+                    itemList.sort(function (a, b) {
+                        return b.bids.avg - a.bids.avg;
+                    });
+
+                    for (let i = 0; i < itemList.length; i++) {
+                        let item = itemList[i];
+                        // $("#items-collection").append('' +
+                        //     '   <li class="collection-item avatar" data-item="' + item.key + '" data-category="' + item.category + '" data-tier="' + item.tier + '">' +
+                        //     '       <img src="https://via.placeholder.com/150" alt="" class="circle">' +
+                        //     '       <a class="title item-title tier-' + item.tier.toLowerCase() + '" href="#">' + (item.display || item.key) + '</a>' +
+                        //     '       <p>First Line <br>' +
+                        //     '           Second Line' +
+                        //     '       </p>' +
+                        //     '       <a href="#!" class="secondary-content">' + Highcharts.numberFormat(item.bids.low, 0) + ' -> ' + Highcharts.numberFormat(item.bids.high, 0) + '</a>' +
+                        //     '   </li>' +
+                        //     '')
+                        $("#items-table").append('' +
+                            '<tr data-item="'+item.key+'" data-category="'+item.category+'" data-tier="'+item.tier+'">' +
+                            '   <td><a href="#">'+(item.display||item.key)+'</a></td>' +
+                            '   <td>'+ Highcharts.numberFormat(item.bids.low, 0)+'</td>' +
+                            '   <td>'+ Highcharts.numberFormat(item.bids.avg, 0)+'</td>' +
+                            '   <td>'+ Highcharts.numberFormat(item.bids.high, 0)+'</td>' +
+                            '</tr>')
+                    }
+                }
+
+                $("#items-table").on("click", "tr", function (e) {
+                    e.preventDefault();
+                    let $this = $(this);
+                    loadDetails($this.data("item"));
+                });
+
+                function loadDetails(item) {
+                    if (!item) return;
+
+                    loadPriceTimeline(item);
+                }
+
+                function loadPriceTimeline(item) {
+                    if (!item) return;
+
+                    $("#priceChart").html("Loading...");
+
+                    $.ajax("https://hypixel-api.inventivetalent.org/api/skyblock/auction/priceTimeline/" + item).done(function (data) {
+                        Highcharts.chart('priceChart', {
+                            chart: {
+                                type: 'spline',
+                                zoomType: 'x',
+                            },
+                            title: {
+                                text: item
+                            },
+                            subtitle: {
+                                text: 'Price (Bid) History'
+                            },
+                            xAxis: {
+                                type: 'datetime',
+                                title: {
+                                    text: 'Date'
+                                }
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'Price'
+                                },
+                                min: 0
+                            },
+                            tooltip: {
+                                // headerFormat: '<b>{series.name}</b><br>',
+                                pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y} coins</b><br/>',
+                                shared: true
+                            },
+
+                            plotOptions: {
+                                series: {
+                                    marker: {
+                                        enabled: true
+                                    }
+                                }
+                            },
+
+
+                            series: [{
+                                name: "LO",
+                                data: data.timelines.lows
+                            }, {
+                                name: "HI",
+                                data: data.timelines.highs
+                            }]
+                        });
+                    })
+                }
+
+            });
+
+        </script>
+    </body>
+</html>

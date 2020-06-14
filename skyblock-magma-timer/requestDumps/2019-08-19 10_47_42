@@ -1,0 +1,24 @@
+POST /skyblock-magma-timer/add_event.php HTTP/1.1
+
+HTTP headers:
+Accept: */*
+Accept-Encoding: gzip
+Accept-Language: de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,ko;q=0.6
+Cookie: __cfduid=df0b8f73e6616302ef5c7f5921e7195951566223890; DOP_info=[1,0,0]
+Host: hypixel.inventivetalent.org
+Referer: https://hypixel.inventivetalent.org/skyblock-magma-timer/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36
+X-Forwarded-For: 162.158.202.220
+Cf-Ipcountry: DE
+Cf-Ray: 508cec962862d457-HAM
+X-Forwarded-Proto: https
+Cf-Visitor: {"scheme":"https"}
+X-Requested-With: XMLHttpRequest
+Sec-Fetch-Mode: cors
+Origin: https://hypixel.inventivetalent.org
+Sec-Fetch-Site: same-origin
+Cf-Connecting-Ip: 2003:c1:df02:b800:3479:ad05:e07f:d47
+Cdn-Loop: cloudflare
+
+Request body:
+type=blaze&captcha=03AOLTBLSyPbKN0oDcozQka6WC-W5A6ohyTdki7JIt2XWctNC4w5N0TtTwUpViWJZf5UvkqMbJrsHhRn0ZYK-tyBmkCuFx3iuA_my2dnjRoOTWgubvQSTZfJQ2WkZ2wbojBhXqcCv9NcBICKVGgG1t8THxV8h9Xg5l0SDDDQK-C91SIVJDhDvEc_XcX3S9E_n8BJUq6183-580lbBZWETyFh6pYKwF2T8ZW9-7g7wrntavWlsLfZVFLALjgHFi_q-QmKbk8JK-_v9A1FVVbfOgmP3_JLzU3trlQ4zeHM_XyHY3yosi6aD-Qzy-ZvDMl9FXtwpVQkj4bzUzz2je8c6t4pcPg7ki70kCm911NCkO4lpeBbZl0EvZh7sdXreFDAhRLC2zIvBCHpwYmgq9jtqBhlukkb_6dJkFbQ&username=&ipv4=87.141.60.102&ipv6=2003%3Ac1%3Adf02%3Ab800%3A3479%3Aad05%3Ae07f%3Ad47

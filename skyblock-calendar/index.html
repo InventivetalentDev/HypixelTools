@@ -338,11 +338,14 @@
 
                     if (hour !== prevHour) {
                         for (let i = 0; i <= 31; i++) {
-                            if (i === day) continue;
+                            let cell = $("#calendar-cell-" + i + " .calendar-cell-date-countdown");
+                            if (i === day) {
+                                cell.text("");
+                                continue;
+                            }
                             let j = i > day ? i : i + 31;
                             let until = ((j - day) * calendarData.real.MINUTES_PER_DAY * 60) - (hour * calendarData.real.SECONDS_PER_HOUR);
                             let untilMin = Math.floor(until / 60);
-                            let cell = $("#calendar-cell-" + i + " .calendar-cell-date-countdown");
                             cell.data("until", until);
                             if (untilMin > 0) {
                                 cell.text(" (in " + untilMin + "min)");
@@ -392,10 +395,10 @@
                         for (let yearlyWhen of yearlyEvent.when) {
                             if (yearlyWhen.hasOwnProperty("start") && yearlyWhen.hasOwnProperty("end")) {
                                 if (yearlyWhen.start.month === monthName) {
-                                    $("#calendar-cell-" + yearlyWhen.start.day + " .calendar-cell-events").append('<span class="event-start-' + yearlyEvent.key + '">' + yearlyEvent.name + ' starts</span><br/>');
+                                    $("#calendar-cell-" + yearlyWhen.start.day + " .calendar-cell-events").append('<a href="/skyblock-'+yearlyEvent.url+'-timer" target="_blank" class="event-start-' + yearlyEvent.key + '">' + yearlyEvent.name + ' starts</a><br/>');
                                 }
                                 if (yearlyWhen.end.month === monthName) {
-                                    $("#calendar-cell-" + yearlyWhen.end.day + " .calendar-cell-events").append('<span class="event-end-' + yearlyEvent.key + '">' + yearlyEvent.name + ' ends</span><br/>');
+                                    $("#calendar-cell-" + yearlyWhen.end.day + " .calendar-cell-events").append('<a href="/skyblock-'+yearlyEvent.url+'-timer" target="_blank" class="event-end-' + yearlyEvent.key + '">' + yearlyEvent.name + ' ends</a><br/>');
                                 }
                             }
                         }
@@ -406,11 +409,11 @@
                         for (let monthlyWhen of monthlyEvent.when) {
                             if (monthlyWhen.hasOwnProperty("start") || monthlyWhen.hasOwnProperty("end")) {
                                 if (monthlyWhen.hasOwnProperty("start"))
-                                    $("#calendar-cell-" + monthlyWhen.start.day + " .calendar-cell-events").append('<span class="event-start-' + monthlyEvent.key + '">' + monthlyEvent.name + ' starts</span><br/>');
+                                    $("#calendar-cell-" + monthlyWhen.start.day + " .calendar-cell-events").append('<a href="/skyblock-'+monthlyEvent.url+'-timer" target="_blank"  class="event-start-' + monthlyEvent.key + '">' + monthlyEvent.name + ' starts</a><br/>');
                                 if (monthlyWhen.hasOwnProperty("end"))
-                                    $("#calendar-cell-" + monthlyWhen.end.day + " .calendar-cell-events").append('<span class="event-end-' + monthlyEvent.key + '">' + monthlyEvent.name + ' ends</span><br/>');
+                                    $("#calendar-cell-" + monthlyWhen.end.day + " .calendar-cell-events").append('<a href="/skyblock-'+monthlyEvent.url+'-timer" target="_blank"  class="event-end-' + monthlyEvent.key + '">' + monthlyEvent.name + ' ends</a><br/>');
                             } else {
-                                $("#calendar-cell-" + monthlyWhen.day + " .calendar-cell-events").append('<span class="event-occurrence-' + monthlyEvent.key + '">' + monthlyEvent.name + '</span><br/>');
+                                $("#calendar-cell-" + monthlyWhen.day + " .calendar-cell-events").append('<a href="/skyblock-'+monthlyEvent.url+'-timer" target="_blank"  class="event-occurrence-' + monthlyEvent.key + '">' + monthlyEvent.name + '</a><br/>');
                             }
                         }
                     }

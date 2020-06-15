@@ -343,7 +343,12 @@
                                 break;
                             } else*/
                             if (until > 0) {
-                                $("#calendar-cell-" + i + " .calendar-cell-date-countdown").text(" (in " + Math.floor(until / 60) + "min)")
+                                let untilMin = Math.floor(until / 60);
+                                if (untilMin > 0) {
+                                    $("#calendar-cell-" + i + " .calendar-cell-date-countdown").text(" (in " + untilMin + "min)")
+                                } else {
+                                    $("#calendar-cell-" + i + " .calendar-cell-date-countdown").text(" (in a few seconds)")
+                                }
                             } else {
                                 $("#calendar-cell-" + i + " .calendar-cell-date-countdown").text("");
                             }
@@ -365,7 +370,7 @@
                         if (day !== prevDay) {
                             $(".current-day").removeClass("current-day");
                             currentCell.addClass("current-day");
-                            
+
                             $("#theLine").remove();
                             currentCell.append('<div id="theLine"></div>');
                         }

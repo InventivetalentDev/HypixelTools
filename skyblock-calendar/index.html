@@ -96,6 +96,10 @@
                 position: relative;
             }
 
+            .calendar-cell-inner.current-day {
+                background-color: rgba(25, 25, 25, 0.5);
+            }
+
             .calendar-row {
                 height: 20% !important;
             }
@@ -359,6 +363,7 @@
                     let currentCell = $("#calendar-cell-" + day);
                     if (currentCell) {
                         if (day !== prevDay) {
+                            currentCell.addClass("current-day");
                             $("#theLine").remove();
                             currentCell.append('<div id="theLine"></div>');
                         }

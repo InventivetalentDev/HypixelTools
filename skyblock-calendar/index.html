@@ -363,7 +363,9 @@
                     let currentCell = $("#calendar-cell-" + day);
                     if (currentCell) {
                         if (day !== prevDay) {
+                            $(".current-day").removeClass("current-day");
                             currentCell.addClass("current-day");
+                            
                             $("#theLine").remove();
                             currentCell.append('<div id="theLine"></div>');
                         }

@@ -357,7 +357,7 @@
 
 
                     $("#year").text("" + year);
-                    $("#month").text(monthName);
+                    $("#month").text(monthName.replace("_"," "));
                     $("#day").text(dayStr);
                     $("#day_suffix").text(dateSuffix(day));
                     $("#hour").text("" + doublePad(hour > 12 ? hour - 12 : hour));

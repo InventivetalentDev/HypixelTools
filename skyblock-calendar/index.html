@@ -338,19 +338,16 @@
 
                     if (hour !== prevHour) {
                         for (let i = 0; i <= 31; i++) {
-                            let until = ((i - day) * calendarData.real.MINUTES_PER_DAY * 60) - (hour * calendarData.real.SECONDS_PER_HOUR);
-                            /*if (until > 10000) {
-                                break;
-                            } else*/
-                            if (until > 0) {
-                                let untilMin = Math.floor(until / 60);
-                                if (untilMin > 0) {
-                                    $("#calendar-cell-" + i + " .calendar-cell-date-countdown").text(" (in " + untilMin + "min)")
-                                } else {
-                                    $("#calendar-cell-" + i + " .calendar-cell-date-countdown").text(" (in a few seconds)")
-                                }
+                            if (i === day) continue;
+                            let j = i > day ? i : i + 31;
+                            let until = ((j - day) * calendarData.real.MINUTES_PER_DAY * 60) - (hour * calendarData.real.SECONDS_PER_HOUR);
+                            let untilMin = Math.floor(until / 60);
+                            let cell = $("#calendar-cell-" + i + " .calendar-cell-date-countdown");
+                            cell.data("until", until);
+                            if (untilMin > 0) {
+                                cell.text(" (in " + untilMin + "min)");
                             } else {
-                                $("#calendar-cell-" + i + " .calendar-cell-date-countdown").text("");
+                                cell.text(" (in a few seconds)")
                             }
                         }
                     }

@@ -361,7 +361,7 @@
                     $("#month").text(monthName.replace("_"," "));
                     $("#day").text(dayStr);
                     $("#day_suffix").text(dateSuffix(day));
-                    $("#hour").text("" + (hour > 12 ? hour - 12 : hour));
+                    $("#hour").text("" + (hour===0 ? 12 : hour > 12 ? hour - 12 : hour));
                     $("#minute").text("" + doublePad(minute));
                     $("#ampm").text(hour >= 12 ? "pm" : "am");
 

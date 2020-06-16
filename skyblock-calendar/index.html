@@ -96,8 +96,12 @@
                 position: relative;
             }
 
+            .calendar-cell-inner.before-current-day {
+                opacity: 0.7;
+            }
+
             .calendar-cell-inner.current-day {
-                background-color: rgba(25, 25, 25, 0.5);
+                background-color: rgba(10, 10, 10, 0.5);
             }
 
             .calendar-row {
@@ -371,6 +375,13 @@
                         if (day !== prevDay) {
                             $(".current-day").removeClass("current-day");
                             currentCell.addClass("current-day");
+
+                            for(let i=0;i<day;i++){
+                                $("#calendar-cell-"+i).removeClass("after-current-day").addClass("before-current-day");
+                            }
+                            for(let i=day+1;i<31;i++){
+                                $("#calendar-cell-"+i).removeClass("before-current-day").addClass("after-current-day");
+                            }
 
                             $("#theLine").remove();
                             currentCell.append('<div id="theLine"></div>');

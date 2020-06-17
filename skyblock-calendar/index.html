@@ -119,6 +119,27 @@
                 transition: left linear 4s;
                 z-index: 5;
             }
+
+            [class*=event-]:before {
+                vertical-align: middle;
+                padding-right: 2px;
+            }
+
+            .event-newYear:before {
+                content: url("img/icons/newYear.png");
+            }
+            .event-spookyFestival:before {
+                content: url("img/icons/spookyFestival.png");
+            }
+            .event-jerryWorkshop:before {
+                content: url("img/icons/jerryWorkshop.png");
+            }
+            .event-winter:before {
+                content: url("img/icons/winter.png");
+            }
+            .event-zoo:before {
+                content: url("img/icons/zoo.png");
+            }
         </style>
 
 
@@ -409,16 +430,16 @@
                         for (let yearlyWhen of yearlyEvent.when) {
                             if (yearlyWhen.hasOwnProperty("start") && yearlyWhen.hasOwnProperty("end")) {
                                 if (yearlyWhen.start.month === monthName) {
-                                    $("#calendar-cell-" + yearlyWhen.start.day + " .calendar-cell-events").append('<a href="/skyblock-'+yearlyEvent.url+'-timer" target="_blank" class="event-start-' + yearlyEvent.key + '">' + yearlyEvent.name + ' starts</a><br/>');
+                                    $("#calendar-cell-" + yearlyWhen.start.day + " .calendar-cell-events").append('<a href="/skyblock-'+yearlyEvent.url+'-timer" target="_blank" class="event-'+yearlyEvent.key+' event-start-' + yearlyEvent.key + '">' + yearlyEvent.name + ' starts</a><br/>');
                                 }
                                 if (yearlyWhen.end.month === monthName) {
-                                    $("#calendar-cell-" + yearlyWhen.end.day + " .calendar-cell-events").append('<a href="/skyblock-'+yearlyEvent.url+'-timer" target="_blank" class="event-end-' + yearlyEvent.key + '">' + yearlyEvent.name + ' ends</a><br/>');
+                                    $("#calendar-cell-" + yearlyWhen.end.day + " .calendar-cell-events").append('<a href="/skyblock-'+yearlyEvent.url+'-timer" target="_blank" class="event-'+yearlyEvent.key+' event-end-' + yearlyEvent.key + '">' + yearlyEvent.name + ' ends</a><br/>');
                                 }
 
                                 if (yearlyWhen.start.month === monthName||yearlyWhen.end.month === monthName) {
                                     if (yearlyWhen.end.day - yearlyWhen.start.day > 1) {
                                         for (let i = yearlyWhen.start.day + 1; i < yearlyWhen.end.day; i++) {
-                                            $("#calendar-cell-" + i + " .calendar-cell-events").append('<a href="/skyblock-' + yearlyEvent.url + '-timer" target="_blank" class="event-active-' + yearlyEvent.key + '">' + yearlyEvent.name + '</a><br/>');
+                                            $("#calendar-cell-" + i + " .calendar-cell-events").append('<a href="/skyblock-' + yearlyEvent.url + '-timer" target="_blank" class="event-'+yearlyEvent.key+' event-active-' + yearlyEvent.key + '">' + yearlyEvent.name + '</a><br/>');
                                         }
                                     }
                                 }
@@ -430,16 +451,16 @@
                     for (let monthlyEvent of monthlyEvents) {
                         for (let monthlyWhen of monthlyEvent.when) {
                             if (monthlyWhen.hasOwnProperty("start") && monthlyWhen.hasOwnProperty("end")) {
-                                    $("#calendar-cell-" + monthlyWhen.start.day + " .calendar-cell-events").append('<a href="/skyblock-'+monthlyEvent.url+'-timer" target="_blank"  class="event-start-' + monthlyEvent.key + '">' + monthlyEvent.name + ' starts</a><br/>');
-                                    $("#calendar-cell-" + monthlyWhen.end.day + " .calendar-cell-events").append('<a href="/skyblock-'+monthlyEvent.url+'-timer" target="_blank"  class="event-end-' + monthlyEvent.key + '">' + monthlyEvent.name + ' ends</a><br/>');
+                                    $("#calendar-cell-" + monthlyWhen.start.day + " .calendar-cell-events").append('<a href="/skyblock-'+monthlyEvent.url+'-timer" target="_blank"  class="event-'+monthlyEvent.key+' event-start-' + monthlyEvent.key + '">' + monthlyEvent.name + ' starts</a><br/>');
+                                    $("#calendar-cell-" + monthlyWhen.end.day + " .calendar-cell-events").append('<a href="/skyblock-'+monthlyEvent.url+'-timer" target="_blank"  class="event-'+monthlyEvent.key+' event-end-' + monthlyEvent.key + '">' + monthlyEvent.name + ' ends</a><br/>');
 
                                 if (monthlyWhen.end.day - monthlyWhen.start.day > 1) {
                                     for(let i = monthlyWhen.start.day +1; i<monthlyWhen.end.day;i++){
-                                        $("#calendar-cell-" + i + " .calendar-cell-events").append('<a href="/skyblock-'+monthlyWhen.url+'-timer" target="_blank" class="event-active-' + monthlyWhen.key + '">' + monthlyWhen.name + '</a><br/>');
+                                        $("#calendar-cell-" + i + " .calendar-cell-events").append('<a href="/skyblock-'+monthlyWhen.url+'-timer" target="_blank" class="event-'+monthlyEvent.key+' event-active-' + monthlyWhen.key + '">' + monthlyWhen.name + '</a><br/>');
                                     }
                                 }
                             } else {
-                                $("#calendar-cell-" + monthlyWhen.day + " .calendar-cell-events").append('<a href="/skyblock-'+monthlyEvent.url+'-timer" target="_blank"  class="event-occurrence-' + monthlyEvent.key + '">' + monthlyEvent.name + '</a><br/>');
+                                $("#calendar-cell-" + monthlyWhen.day + " .calendar-cell-events").append('<a href="/skyblock-'+monthlyEvent.url+'-timer" target="_blank"  class="event-'+monthlyEvent.key+' event-occurrence-' + monthlyEvent.key + '">' + monthlyEvent.name + '</a><br/>');
                             }
                         }
                     }

@@ -274,11 +274,11 @@
                     console.log(secondsSinceLastLog);
                     year += yearDiff; // the only thing without bounds
 
-                    let monthDiff = Math.floor(secondsSinceLastLog / secondsPerMonth) % 12;
+                    let monthDiff = Math.floor(secondsSinceLastLog / secondsPerMonth) % 13;
                     console.log("monthDiff: " + monthDiff);
                     secondsSinceLastLog -= monthDiff * secondsPerMonth;
                     console.log(secondsSinceLastLog);
-                    month = (month + monthDiff) % 12;
+                    month = (month + monthDiff) % 13;
 
 
                     let dayDiff = Math.floor(secondsSinceLastLog / secondsPerDay) % 32;
@@ -316,7 +316,9 @@
 
                     console.log("Leftover seconds: " + secondsSinceLastLog);
 
+                    console.log("Month # " + month);
                     let monthName = calendarData.months["" + month];
+                    console.log("Month " + monthName)
 
                     let dayStr = "" + day;
 

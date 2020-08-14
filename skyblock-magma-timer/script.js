@@ -1,184 +1,536 @@
 $(document).ready(function () {
-    function r() {
-        c = Date.now();
-        t++;
-        var a = moment.duration(c - b.latest.spawn).asHours(), l = moment.duration(c - b.latest.death).asHours(), e = moment.duration(b.estimate - c).asMinutes(), f = moment.duration(c - b.latest.spawn).asMinutes(), g = moment.duration(c - b.latest.blaze).asMinutes(), d = moment.duration(c - b.latest.magma).asMinutes(), m = moment.duration(c - b.latest.music).asMinutes();
-        $("#nextTime").text("(" + moment(b.estimate).format("MMMM Do YYYY, h:mm:ss a") + ")");
-        var h = b.latest.death > b.latest.spawn,
-            k = h ? b.latest.death : b.latest.spawn;
-        $("#lastTrackedType").text(h ? "death" : "spawn");
-        $("#lastTrackedTime").html(moment(k).fromNow() + "<br/> (" + moment(k).format("MMMM Do YYYY, h:mm:ss a") + ")" + (5 < a && 5 < l ? "<br/><i>The timer could likely be inaccurate, since server restarts etc. are not accounted for</i>" : ""));
-        0 >= b.latest.death && 0 >= b.latest.spawn && $("#lastTrackedWrapper").hide();
-        a = b.estimate - c;
-        l = moment.utc(a).format("HH:mm:ss");
-        0 < a ? ($("#time").text(l), $("#timerText").text("The Magma Boss should spawn in about"),
-            $("head title", window.parent.document).text(l + " | Magma Boss Timer // Hypixel Skyblock")) : ($("#time").text("NOW"), $("#timerText").text("The Magma Boss should spawn"), $("head title", window.parent.document).text("NOW | Magma Boss Timer // Hypixel Skyblock"));
-        15 < t && 0 === c % 2 && (25 < e ? $("#waveBlazeBtn").hide() : $("#waveBlazeBtn").show(), (30 > g && 5 < g || 0 === b.latest.blaze && 30 > d && 1 < d) && $("#waveBlazeBtn").attr("disabled", !0), 12E5 > c - b.latest.blaze ? ($("#waveBlazeTime").text("(" + moment(b.latest.blaze).fromNow() + ")"),
-            $("#waveBlazeBtn").attr("data-tooltip", b.latestConfirmations.blaze + " Confirmations")) : ($("#waveBlazeTime").text(""), $("#waveBlazeBtn").attr("data-tooltip", "Not Confirmed")), 15 < e ? $("#waveMagmaBtn").hide() : $("#waveMagmaBtn").show(), (30 > d && 5 < d || 0 === b.latest.magma && 30 > m && 1 < m) && $("#waveMagmaBtn").attr("disabled", !0), 6E5 > c - b.latest.magma ? ($("#waveMagmaTime").text("(" + moment(b.latest.magma).fromNow() + ")"), $("#waveMagmaBtn").attr("data-tooltip", b.latestConfirmations.magma + " Confirmations")) : ($("#waveMagmaTime").text(""),
-            $("#waveMagmaBtn").attr("data-tooltip", "Not Confirmed")), 5 < e ? $("#musicBtn").hide() : $("#musicBtn").show(), 30 > m && 5 < m && $("#musicBtn").attr("disabled", !0), 3E5 > c - b.latest.music ? ($("#musicTime").text("(" + moment(b.latest.music).fromNow() + ")"), $("#musicBtn").attr("data-tooltip", b.latestConfirmations.music + " Confirmations")) : ($("#musicTime").text(""), $("#musicBtn").attr("data-tooltip", "Not Confirmed")), 4 < e && 1 < f ? $("#spawnedBtn").hide() : $("#spawnedBtn").show(), 3E5 > c - b.latest.spawn ? ($("#spawnTime").text("(" +
-            moment(b.latest.spawn).fromNow() + ")"), $("#spawnedBtn").attr("data-tooltip", b.latestConfirmations.spawn + " Confirmations")) : ($("#spawnTime").text(""), $("#spawnedBtn").attr("data-tooltip", "Not Confirmed")), 1 < e && 2 < f ? $("#deathBtn").hide() : $("#deathBtn").show(), 3E5 > c - b.latest.death ? ($("#deathTime").text("(" + moment(b.latest.death).fromNow() + ")"), $("#deathBtn").attr("data-tooltip", b.latestConfirmations.death + " Confirmations")) : ($("#deathTime").text(""), $("#deathBtn").attr("data-tooltip", "Not Confirmed")),
-            $(".track-btn.tooltipped").tooltip({position: "left"}), $(".track-btn:visible").length ? $("#buttonNote").show() : $("#buttonNote").hide());
-        e = "";
-        3E5 > a ? (e = "Get ready!", "true" === localStorage.getItem("fiveMinNotification") && (n || (n = u("The Skyblock Magma Boss should spawn in less than five minutes!")))) : n = null;
-        6E5 > a ? (e = "If you're not already in the Blazing Fortress, you should get going!", "true" === localStorage.getItem("tenMinNotification") && (p || n || (p = u("The Skyblock Magma Boss should spawn in less than 10 minutes!")))) :
-            p = null;
-        $("#suggestionMessage").text(e)
-    }
-
-    function h() {
-        $.ajax("https://hypixel-api.inventivetalent.org/api/skyblock/bosstimer/magma/estimatedSpawn").done(function (a) {
-            console.log(a);
-            b = a;
-            r();
-            clearInterval(v);
-            v = setInterval(r, 1E3)
-        })
-    }
-
-    function w() {
-        $.ajax({method: "POST", url: "https://hypixel-api.inventivetalent.org/api/skyblock/bosstimer/magma/ping", data: {lastFocused: Math.floor(x), minecraftUser: $("#mcUsername").val(), ipv4: g, ipv6: d}})
-    }
-
-    function f(a, b, c, d) {
-        $("#addEventType").val(b);
-        $("#confirmationModal").modal("open");
-        a.attr("disabled", !0)
-    }
-
-    function y() {
-        $.ajax("https://hypixel-api.inventivetalent.org/api/skyblock/bosstimer/magma/historyChart?hours=" + k).done(function (a) {
-            Highcharts.chart("timelineChart", {
-                chart: {zoomType: "x", type: "timeline", height: "20%", backgroundColor: "rgb(55, 40, 47)", marginLeft: 80, marginRight: 80}, xAxis: {type: "datetime", visible: !1}, yAxis: {gridLineWidth: 1, title: null, labels: {enabled: !1}}, legend: {enabled: !1}, title: {text: null}, tooltip: {
-                    style: {}, formatter: function () {
-                        var a = Highcharts.dateFormat("%y-%m-%d",
-                            this.x), b = Highcharts.dateFormat("%H:%M:%S", this.x);
-                        return '<span style="color:' + this.point.color + '">\u25cf</span> ' + this.point.name + "<br/><span>" + (a + " <b>" + b + "</b></span><br/><span>(") + (this.point.confirmations + " confirmations)</span>")
-                    }, headerFormat: '<span style="color:{point.color}">\u25cf</span> {point.key}<br/>', pointFormat: "<span>{point.x:%y-%m-%d} <b>{point.x:%H:%M:%S}</b></span><br/>", footerFormat: ""
-                }, series: [{dataLabels: {allowOverlap: !1}, marker: {symbol: "circle"}, data: a.chart}]
-            })
-        })
-    }
-
-    function u(a,
-               b) {
-        if ("Notification" in window) if ("granted" !== Notification.permission) console.warn("Notifications not granted"); else if (q && z) console.log("OneSignal push notifications are enabled, not sending another one."); else return new Notification(b || "Magma Boss Reminder", {
-            body: a,
-            icon: "https://hypixel.inventivetalent.org/img/Magma_Cube_50px.png"
-        }); else console.warn("Browser does not support notifications")
-    }
-
-    $("#infoModal").modal();
-    $("#timelineModal").modal({
+    // Modal init
+    $('#infoModal').modal();
+    $('#timelineModal').modal({
         onOpenEnd: function () {
-            y()
+            makeTimelineChart();
         }
     });
     $("#confirmationModal").modal({
         onCloseStart: function () {
             $("#addEventType").val("");
-            $("#captchaConfirmSubmit").hide()
+            $("#captchaConfirmSubmit").hide();
         }
     });
     $("#eventInfoModal").modal({
         onOpenEnd: function () {
             $("#blazeWaveVideo")[0].play();
             $("#magmaWaveVideo")[0].play();
-            $("#magmaBossVideo")[0].play()
+            $("#magmaBossVideo")[0].play();
         }
+    })
+    $('.track-btn.tooltipped').tooltip({
+        position: "left"
     });
-    $(".track-btn.tooltipped").tooltip({position: "left"});
+
+    let reCaptchaToken = null;
     grecaptcha.ready(function () {
         console.log("recaptcha ready");
-        $(".track-btn").attr("disabled", !1)
+
+        $(".track-btn").attr("disabled", false);
     });
-    "#DEV" === window.location.hash && $("#d").text("DEV MODE ACTIVE");
-    var c = (new Date).getTime(), t = 0, p, n, b = {}, v = -1, k = 4, x = c / 1E3, g = "", d = "", z = !1, q = !1;
-    h();
-    setInterval(h, 3E4);
-    w();
-    setInterval(w,
-        3E4);
+
+    const devMode = window.location.hash === "#DEV";
+    if (devMode) {
+        $("#d").text("DEV MODE ACTIVE");
+    }
+
+    let now = new Date().getTime();
+    let twoHoursInMillis = 7.2e+6;
+    let oneAndHalfHourInMillis = 5.4e+6;
+    let twentyMinsInMillis = 1.2e+6;
+    let tenMinsInMillis = 600000;
+    let fiveMinsInMillis = 300000;
+
+    let startCounter = 0;
+
+    let tenMinuteNotification;
+    let fiveMinuteNotification;
+
+    let estimateData = {};
+
+    let timerId = -1;
+    let historyHours = 4;
+    let lastFocused = now / 1000;
+
+    let ipv4 = "";
+    let ipv6 = "";
+
+    let onePushNotificationsGranted = false;
+    let onePushNotificationsEnabled = false;
+
+    function updateTimer() {
+        now = Date.now();
+
+        startCounter++;
+
+        let hoursSinceLastSpawn = moment.duration(now - estimateData.latest.spawn).asHours();
+        let hoursSinceLastDeath = moment.duration(now - estimateData.latest.death).asHours();
+
+        let minutesUntilNextSpawn = moment.duration(estimateData.estimate - now).asMinutes();
+        let minutesSinceLastSpawn = moment.duration(now - estimateData.latest.spawn).asMinutes();
+
+        let minutesSinceLastBlaze = moment.duration(now - estimateData.latest.blaze).asMinutes();
+        let minutesSinceLastMagma = moment.duration(now - estimateData.latest.magma).asMinutes();
+        let minutesSinceLastMusic = moment.duration(now - estimateData.latest.music).asMinutes();
+
+        $("#nextTime").text("(" + moment(estimateData.estimate).format('MMMM Do YYYY, h:mm:ss a') + ")");
+
+        let deathMoreRecent = estimateData.latest.death > estimateData.latest.spawn;
+        let latestThing = deathMoreRecent ? estimateData.latest.death : estimateData.latest.spawn;
+        $("#lastTrackedType").text(deathMoreRecent ? "death" : "spawn");
+        $("#lastTrackedTime").html(moment(latestThing).fromNow() + "<br/> (" + moment(latestThing).format('MMMM Do YYYY, h:mm:ss a') + ")" + ((hoursSinceLastSpawn > 5 && hoursSinceLastDeath > 5) ? "<br/><i>The timer could likely be inaccurate, since server restarts etc. are not accounted for</i>" : "") + "");
+
+        if (estimateData.latest.death <= 0 && estimateData.latest.spawn <= 0) {
+            $("#lastTrackedWrapper").hide();
+        }
+
+        let duration = estimateData.estimate - now;
+        let formattedTimer = moment.utc(duration).format("HH:mm:ss");
+        if (duration > 0) {
+            $("#time").text(formattedTimer);
+            $("#timerText").text("The Magma Boss should spawn in about");
+
+            $('head title', window.parent.document).text(formattedTimer + " | Magma Boss Timer // Hypixel Skyblock");
+        } else {
+            $("#time").text("NOW");
+            $("#timerText").text("The Magma Boss should spawn");
+
+            $('head title', window.parent.document).text("NOW | Magma Boss Timer // Hypixel Skyblock");
+        }
+
+        // Start timeout before showing any buttons, since it looks like a lot of people like clicking buttons with shiny colors
+        if (startCounter > 15) {
+            if (now % 2 === 0) {
+                if (minutesUntilNextSpawn > 25) {
+                    $("#waveBlazeBtn").hide();
+                } else {
+                    $("#waveBlazeBtn").show();
+                }
+                if ((minutesSinceLastBlaze < 30 && minutesSinceLastBlaze > 5) || (estimateData.latest.blaze === 0 && minutesSinceLastMagma < 30 && minutesSinceLastMagma > 1))
+                    $("#waveBlazeBtn").attr("disabled", true);
+                if (now - estimateData.latest.blaze < twentyMinsInMillis) {
+                    $("#waveBlazeTime").text("(" + moment(estimateData.latest.blaze).fromNow() + ")");
+                    $("#waveBlazeBtn").attr("data-tooltip", estimateData.latestConfirmations.blaze + " Confirmations");
+                    // $("#waveBlazeBtn").attr("disabled", true);
+                } else {
+                    $("#waveBlazeTime").text("");
+                    $("#waveBlazeBtn").attr("data-tooltip", "Not Confirmed");
+                }
+
+                if (minutesUntilNextSpawn > 15) {
+                    $("#waveMagmaBtn").hide();
+                } else {
+                    $("#waveMagmaBtn").show();
+                }
+                if ((minutesSinceLastMagma < 30 && minutesSinceLastMagma > 5) || (estimateData.latest.magma === 0 && minutesSinceLastMusic < 30 && minutesSinceLastMusic > 1))
+                    $("#waveMagmaBtn").attr("disabled", true);
+                if (now - estimateData.latest.magma < tenMinsInMillis) {
+                    $("#waveMagmaTime").text("(" + moment(estimateData.latest.magma).fromNow() + ")");
+                    $("#waveMagmaBtn").attr("data-tooltip", estimateData.latestConfirmations.magma + " Confirmations");
+                    // $("#waveMagmaBtn").attr("disabled", true);
+                } else {
+                    $("#waveMagmaTime").text("");
+                    $("#waveMagmaBtn").attr("data-tooltip", "Not Confirmed")
+                }
+
+                if (minutesUntilNextSpawn > 5) {
+                    $("#musicBtn").hide();
+                } else {
+                    $("#musicBtn").show();
+                }
+                if (minutesSinceLastMusic < 30 && minutesSinceLastMusic > 5)
+                    $("#musicBtn").attr("disabled", true);
+                if (now - estimateData.latest.music < fiveMinsInMillis) {
+                    $("#musicTime").text("(" + moment(estimateData.latest.music).fromNow() + ")");
+                    $("#musicBtn").attr("data-tooltip", estimateData.latestConfirmations.music + " Confirmations");
+                    // $("#musicBtn").attr("disabled", true);
+                } else {
+                    $("#musicTime").text("");
+                    $("#musicBtn").attr("data-tooltip", "Not Confirmed");
+                }
+
+                if (minutesUntilNextSpawn > 4 && minutesSinceLastSpawn > 1) {
+                    $("#spawnedBtn").hide();
+                } else {
+                    $("#spawnedBtn").show();
+                }
+                if (now - estimateData.latest.spawn < fiveMinsInMillis) {
+                    $("#spawnTime").text("(" + moment(estimateData.latest.spawn).fromNow() + ")");
+                    $("#spawnedBtn").attr("data-tooltip", estimateData.latestConfirmations.spawn + " Confirmations");
+                    // $("#musicBtn").attr("disabled", true);
+                } else {
+                    $("#spawnTime").text("");
+                    $("#spawnedBtn").attr("data-tooltip", "Not Confirmed")
+                }
+
+                if (minutesUntilNextSpawn > 1 && minutesSinceLastSpawn > 2) {
+                    $("#deathBtn").hide();
+                } else {
+                    $("#deathBtn").show();
+                }
+                if (now - estimateData.latest.death < fiveMinsInMillis) {
+                    $("#deathTime").text("(" + moment(estimateData.latest.death).fromNow() + ")");
+                    $("#deathBtn").attr("data-tooltip", estimateData.latestConfirmations.death + " Confirmations");
+                    // $("#musicBtn").attr("disabled", true);
+                } else {
+                    $("#deathTime").text("");
+                    $("#deathBtn").attr("data-tooltip", "Not Confirmed")
+                }
+
+                // update tooltips
+                $('.track-btn.tooltipped').tooltip({
+                    position: "left"
+                });
+
+                if ($('.track-btn:visible').length) {
+                    $("#buttonNote").show()
+                } else {
+                    $("#buttonNote").hide();
+                }
+            }
+        }
+
+
+        let message = "";
+        if (duration < fiveMinsInMillis) {
+            message = "Get ready!";
+
+            if (localStorage.getItem("fiveMinNotification") === "true") {
+                if (!fiveMinuteNotification) {
+                    fiveMinuteNotification = showNotification("The Skyblock Magma Boss should spawn in less than five minutes!");
+                }
+            }
+        } else {
+            fiveMinuteNotification = null;
+        }
+        if (duration < tenMinsInMillis) {
+            message = "If you're not already in the Blazing Fortress, you should get going!";
+
+            if (localStorage.getItem("tenMinNotification") === "true") {
+                if (!tenMinuteNotification && !fiveMinuteNotification) {
+                    tenMinuteNotification = showNotification("The Skyblock Magma Boss should spawn in less than 10 minutes!");
+                }
+            }
+        } else {
+            tenMinuteNotification = null;
+        }
+
+        $("#suggestionMessage").text(message);
+    }
+
+    function refreshEstimate() {
+        $.ajax("https://hypixel-api.inventivetalent.org/api/skyblock/bosstimer/magma/estimatedSpawn").done(function (data) {
+            console.log(data);
+            estimateData = data;
+
+
+            updateTimer();
+            clearInterval(timerId);
+            timerId = setInterval(updateTimer, 1000);// tick every second
+        });
+
+        // $.ajax("https://hypixel-api.inventivetalent.org/api/skyblock/bosstimer/magma/activeUsers").done(function (data) {
+        //     $("#activeUserCount").text(data.activeUsers);
+        // })
+    }
+
+    refreshEstimate();
+    setInterval(refreshEstimate, 30000);
+
+    function ping() {
+        $.ajax({
+            method: "POST",
+            url: "https://hypixel-api.inventivetalent.org/api/skyblock/bosstimer/magma/ping",
+            data: {
+                lastFocused: Math.floor(lastFocused),
+                minecraftUser: $("#mcUsername").val(),
+                ipv4: ipv4,
+                ipv6: ipv6
+            }
+        })
+    }
+
+    ping();
+    setInterval(ping, 30000);
+
     $("#waveBlazeBtn").click(function () {
-        var a = $(this);
-        f(a, "blaze", "a blaze wave", !1)
+        let $this = $(this);
+        doEventPost($this, "blaze", "a blaze wave", false);
     });
     $("#waveMagmaBtn").click(function () {
-        var a = $(this);
-        f(a, "magma", "a magma wave", !1)
+        let $this = $(this);
+        doEventPost($this, "magma", "a magma wave", false);
     });
     $("#musicBtn").click(function () {
-        var a = $(this);
-        f(a, "music", "music", !1)
+        let $this = $(this);
+        doEventPost($this, "music", "music", false);
     });
     $("#spawnedBtn").click(function () {
-        var a = $(this);
-        f(a, "spawn", "a boss spawn", !1)
+        let $this = $(this);
+        doEventPost($this, "spawn", "a boss spawn", false);
     });
     $("#deathBtn").click(function () {
-        var a = $(this);
-        f(a, "death", "a boss death", !0)
+        let $this = $(this);
+        doEventPost($this, "death", "a boss death", true);
     });
-    $("#eventConfirmationForm").on("submit", function (a) {
-        a.preventDefault();
-        $("#captchaConfirmSubmit").attr("disabled",
-            !0);
-        if (a = $("#addEventType").val()) {
-            var b = grecaptcha.getResponse(), c = $("#mcUsername").val();
-            $.ajax({method: "POST", url: "https://hypixel-api.inventivetalent.org/api/skyblock/bosstimer/magma/addEvent", data: {type: a, captcha: b, username: c, ipv4: g, ipv6: d}}).done(function () {
-                $("#confirmationModal").modal("close");
-                h()
-            })
-        }
-    });
-    $("#tenMinNotificationSwitch").prop("checked", "true" === localStorage.getItem("tenMinNotification") && "granted" === Notification.permission);
-    $("#tenMinNotificationSwitch").change(function () {
-        $(this).is(":checked") ?
-            Notification.requestPermission().then(function (a) {
-                console.log(a);
-                localStorage.setItem("tenMinNotification", "true")
-            }) : localStorage.setItem("tenMinNotification", "false")
-    });
-    $("#fiveMinNotificationSwitch").prop("checked", "true" === localStorage.getItem("fiveMinNotification") && "granted" === Notification.permission);
-    $("#fiveMinNotificationSwitch").change(function () {
-        $(this).is(":checked") ? Notification.requestPermission().then(function (a) {
-            console.log(a);
-            localStorage.setItem("fiveMinNotification", "true")
-        }) : localStorage.setItem("fiveMinNotification",
-            "false")
-    });
-    OneSignal.push(["getNotificationPermission", function (a) {
-        console.log("OnePush Site Notification Permission:", a);
-        z = "granted" === a
-    }]);
-    OneSignal.push(function () {
-        OneSignal.on("subscriptionChange", function (a) {
-            console.log("The user's subscription state is now:", a);
-            q = a
-        });
-        OneSignal.isPushNotificationsEnabled(function (a) {
-            a ? console.log("Push notifications are enabled!") : console.log("Push notifications are not enabled yet.");
-            q = a
+
+    function doEventPost($this, event, eventDescription, skipEstimateRefresh) {
+        showConfirmationModal(event);
+        $this.attr("disabled", true);
+        // let username = $("#mcUsername").val();
+        // confirmAndCaptchaAdd(eventDescription, function (b) {
+        //     if (b) {
+        //         $this.attr("disabled", true);
+        //         $.ajax({
+        //             method: "POST",
+        //             url: "https://hypixel-api.inventivetalent.org/api/skyblock/bosstimer/magma/addEvent",
+        //             data: {
+        //                 type: event,
+        //                 captcha: reCaptchaToken,
+        //                 username: username,
+        //                 ipv4: ipv4,
+        //                 ipv6: ipv6
+        //             }
+        //         }).done(function () {
+        //             // $this.css("display", "none");
+        //             $this.attr("disabled", true);
+        //
+        //             if (!skipEstimateRefresh)
+        //                 refreshEstimate();
+        //         })
+        //     }
+        // })
+    }
+
+    function showConfirmationModal(event) {
+        $("#addEventType").val(event);
+        $("#confirmationModal").modal("open");
+    }
+
+    $("#eventConfirmationForm").on("submit", function (e) {
+        e.preventDefault();
+        $("#captchaConfirmSubmit").attr("disabled", true);
+
+        let event = $("#addEventType").val();
+        if (!event) return;
+        let captcha = grecaptcha.getResponse();
+
+        let username = $("#mcUsername").val();
+
+
+        $.ajax({
+            method: "POST",
+            url: "https://hypixel-api.inventivetalent.org/api/skyblock/bosstimer/magma/addEvent",
+            data: {
+                type: event,
+                captcha: captcha,
+                username: username,
+                ipv4: ipv4,
+                ipv6: ipv6
+            }
+        }).done(function () {
+            $("#confirmationModal").modal("close");
+
+            refreshEstimate();
         })
     });
-    $("#mcUsername").val(localStorage.getItem("mcUsername") || "");
-    $("#mcUsername").on("change",
-        function () {
-            localStorage.setItem("mcUsername", $(this).val())
+
+
+    $("#tenMinNotificationSwitch").prop("checked", localStorage.getItem("tenMinNotification") === "true" && Notification.permission === "granted");
+    $("#tenMinNotificationSwitch").change(function () {
+        let checked = $(this).is(":checked");
+        if (checked) {
+            Notification.requestPermission().then(function (result) {
+                console.log(result);
+                localStorage.setItem("tenMinNotification", "true");
+            });
+        } else {
+            localStorage.setItem("tenMinNotification", "false");
+        }
+    });
+
+
+    $("#fiveMinNotificationSwitch").prop("checked", localStorage.getItem("fiveMinNotification") === "true" && Notification.permission === "granted");
+    $("#fiveMinNotificationSwitch").change(function () {
+        let checked = $(this).is(":checked");
+        if (checked) {
+            Notification.requestPermission().then(function (result) {
+                console.log(result);
+                localStorage.setItem("fiveMinNotification", "true");
+            });
+        } else {
+            localStorage.setItem("fiveMinNotification", "false");
+        }
+    });
+
+    OneSignal.push(["getNotificationPermission", function (permission) {
+        console.log("OnePush Site Notification Permission:", permission);
+        onePushNotificationsGranted = permission === "granted";
+    }]);
+    // $("#pushNotificationSwitch").change(function () {
+    //     let checked = $(this).is(":checked");
+    //     if (checked) {
+    //         OneSignal.push(function () {
+    //             OneSignal.showNativePrompt();
+    //             localStorage.setItem("pushNotifications", "true");
+    //         });
+    //     } else {
+    //         localStorage.setItem("pushNotifications", "false");
+    //     }
+    // });
+    OneSignal.push(function () {
+        // Occurs when the user's subscription changes to a new value.
+        OneSignal.on('subscriptionChange', function (isSubscribed) {
+            console.log("The user's subscription state is now:", isSubscribed);
+            onePushNotificationsEnabled = isSubscribed;
         });
-    Highcharts.setOptions({time: {useUTC: !1}});
+        OneSignal.isPushNotificationsEnabled(function (isEnabled) {
+            if (isEnabled)
+                console.log("Push notifications are enabled!");
+            else
+                console.log("Push notifications are not enabled yet.");
+
+            onePushNotificationsEnabled = isEnabled;
+        });
+    });
+
+    $("#mcUsername").val(localStorage.getItem("mcUsername") || "");
+    $("#mcUsername").on("change", function () {
+        localStorage.setItem("mcUsername", $(this).val());
+    });
+
+    Highcharts.setOptions({
+        time: {
+            useUTC: false
+        }
+    });
+
+    function makeTimelineChart() {
+        $.ajax("https://hypixel-api.inventivetalent.org/api/skyblock/bosstimer/magma/historyChart?hours=" + historyHours).done(function (data) {
+            Highcharts.chart('timelineChart', {
+                chart: {
+                    zoomType: 'x',
+                    type: 'timeline',
+                    height: '20%',
+                    backgroundColor: "rgb(55, 40, 47)",
+                    marginLeft: 80,
+                    marginRight: 80
+                },
+                xAxis: {
+                    type: 'datetime',
+                    visible: false
+                },
+                yAxis: {
+                    gridLineWidth: 1,
+                    title: null,
+                    labels: {
+                        enabled: false
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                title: {
+                    text: null
+                },
+                tooltip: {
+                    style: {
+                        //width: 300
+                    },
+                    formatter: function () {
+                        let date = Highcharts.dateFormat("%y-%m-%d", this.x);
+                        let time = Highcharts.dateFormat("%H:%M:%S", this.x);
+                        return `<span style="color:${ this.point.color }">\u25CF</span> ${ this.point.name }<br/>` +
+                            `<span>${ date } <b>${ time }</b></span><br/>` +
+                            `<span>(${ this.point.confirmations } confirmations)</span>`
+                    },
+                    //TODO: use formatter function in order to display extra data
+                    headerFormat: '<span style="color:{point.color}">\u25CF</span> {point.key}<br/>',
+                    pointFormat: '<span>{point.x:%y-%m-%d} <b>{point.x:%H:%M:%S}</b></span><br/>',
+                    footerFormat: ''
+                },
+                series: [{
+                    dataLabels: {
+                        allowOverlap: false,
+                        /* format: '<span style="color:{point.color}">● </span><span style="font-weight: bold;" > ' +
+                             '{point.x:%d %b %Y}</span><br/>{point.name}'*/
+                    },
+                    marker: {
+                        symbol: 'circle'
+                    },
+                    data: data.chart
+                }]
+            });
+        });
+    }
+
     $("#timelineLoadMore").click(function () {
-        24 > k ? k += 2 : $(this).attr("disabled", !0);
-        y()
+        if (historyHours < 24) {
+            historyHours += 2;
+        } else {
+            $(this).attr("disabled", true);
+        }
+        makeTimelineChart();
     });
+
     $(window).on("focus blur", function () {
-        x = Date.now() / 1E3
+        lastFocused = Date.now() / 1000;
     });
-    $.getJSON("https://api.ipify.org?format=jsonp&callback=?", function (a) {
-        g = a.ip;
-        console.log("IPv4: " + g)
+
+    $.getJSON("https://api.ipify.org?format=jsonp&callback=?", function (json) {
+        ipv4 = json.ip;
+        console.log("IPv4: " + ipv4);
     });
-    $.getJSON("https://api6.ipify.org?format=jsonp&callback=?", function (a) {
-        d = a.ip;
-        console.log("IPv6: " + d)
-    })
-});
+    $.getJSON("https://api6.ipify.org?format=jsonp&callback=?", function (json) {
+        ipv6 = json.ip;
+        console.log("IPv6: " + ipv6);
+    });
+
+    function showNotification(body, title) {
+        if (!("Notification" in window)) {
+            console.warn("Browser does not support notifications");
+            return;
+        }
+        if (Notification.permission !== "granted") {
+            console.warn("Notifications not granted");
+            return;
+        }
+
+
+        if (onePushNotificationsEnabled && onePushNotificationsGranted) {
+            console.log("OneSignal push notifications are enabled, not sending another one.");
+            return;
+        }
+
+        return new Notification(title || "Magma Boss Reminder", {
+            body: body,
+            icon: "https://hypixel.inventivetalent.org/img/Magma_Cube_50px.png"
+        });
+    }
+
+
+    function confirmAndCaptchaAdd(type, cb) {
+        function checkCaptcha() {
+            grecaptcha.execute('6LeaYLIUAAAAAHfC2C6GsI84CW5sJjuaZA9FERRE', {action: (type || "homepage").replace(/ /gi, "_")}).then(function (token) {
+                console.log("got recaptcha token");
+                reCaptchaToken = token;
+
+                cb(true);
+            });
+            return true;
+        }
+
+        if (estimateData.estimate - now > 5.4e+6) {
+            if (confirm("The next estimated spawn phase has not yet started. Are you sure you want add " + (type || "a spawn") + "?") == true) {
+                return checkCaptcha();
+            }
+            return false;
+        }
+        return checkCaptcha()
+    }
+
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+})

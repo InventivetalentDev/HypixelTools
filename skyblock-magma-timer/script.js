@@ -24,11 +24,15 @@ $(document).ready(function () {
     });
 
     let reCaptchaToken = null;
-    grecaptcha.ready(function () {
-        console.log("recaptcha ready");
+    try{
+        grecaptcha.ready(function () {
+            console.log("recaptcha ready");
 
-        $(".track-btn").attr("disabled", false);
-    });
+            $(".track-btn").attr("disabled", false);
+        });
+    }catch (e) {
+        console.warn(e);
+    }
 
     const devMode = window.location.hash === "#DEV";
     if (devMode) {

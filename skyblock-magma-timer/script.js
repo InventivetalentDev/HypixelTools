@@ -106,7 +106,7 @@ $(document).ready(function () {
         // Start timeout before showing any buttons, since it looks like a lot of people like clicking buttons with shiny colors
         if (startCounter > 15) {
             if (now % 2 === 0) {
-                if (minutesUntilNextSpawn > 25) {
+                if (minutesUntilNextSpawn > 25 && estimateData.confidence > 0.3) {
                     $("#waveBlazeBtn").hide();
                 } else {
                     $("#waveBlazeBtn").show();
@@ -122,7 +122,7 @@ $(document).ready(function () {
                     $("#waveBlazeBtn").attr("data-tooltip", "Not Confirmed");
                 }
 
-                if (minutesUntilNextSpawn > 15) {
+                if (minutesUntilNextSpawn > 15 && estimateData.confidence > 0.3) {
                     $("#waveMagmaBtn").hide();
                 } else {
                     $("#waveMagmaBtn").show();
@@ -138,7 +138,7 @@ $(document).ready(function () {
                     $("#waveMagmaBtn").attr("data-tooltip", "Not Confirmed")
                 }
 
-                if (minutesUntilNextSpawn > 5) {
+                if (minutesUntilNextSpawn > 5 && estimateData.confidence > 0.3) {
                     $("#musicBtn").hide();
                 } else {
                     $("#musicBtn").show();
@@ -154,7 +154,7 @@ $(document).ready(function () {
                     $("#musicBtn").attr("data-tooltip", "Not Confirmed");
                 }
 
-                if (minutesUntilNextSpawn > 4 && minutesSinceLastSpawn > 1) {
+                if (minutesUntilNextSpawn > 4 && minutesSinceLastSpawn > 1 && estimateData.confidence > 0.3) {
                     $("#spawnedBtn").hide();
                 } else {
                     $("#spawnedBtn").show();
@@ -168,7 +168,7 @@ $(document).ready(function () {
                     $("#spawnedBtn").attr("data-tooltip", "Not Confirmed")
                 }
 
-                if (minutesUntilNextSpawn > 1 && minutesSinceLastSpawn > 2) {
+                if (minutesUntilNextSpawn > 1 && minutesSinceLastSpawn > 2 && estimateData.confidence > 0.3) {
                     $("#deathBtn").hide();
                 } else {
                     $("#deathBtn").show();

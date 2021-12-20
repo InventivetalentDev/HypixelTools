@@ -24,13 +24,13 @@ $(document).ready(function () {
     });
 
     let reCaptchaToken = null;
-    try{
+    try {
         grecaptcha.ready(function () {
             console.log("recaptcha ready");
 
             $(".track-btn").attr("disabled", false);
         });
-    }catch (e) {
+    } catch (e) {
         console.warn(e);
     }
 
@@ -79,6 +79,7 @@ $(document).ready(function () {
         let minutesSinceLastMusic = moment.duration(now - estimateData.latest.music).asMinutes();
 
         $("#nextTime").text("(" + moment(estimateData.estimate).format('MMMM Do YYYY, h:mm:ss a') + ")");
+        $("#confidenceScore").text("" + (Math.floor(estimateData.confidence * 10) * 10) + "% confidence")
 
         let deathMoreRecent = estimateData.latest.death > estimateData.latest.spawn;
         let latestThing = deathMoreRecent ? estimateData.latest.death : estimateData.latest.spawn;

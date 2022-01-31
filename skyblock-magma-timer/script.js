@@ -487,7 +487,7 @@ $(document).ready(function () {
         ipv4 = json.ip;
         console.log("IPv4: " + ipv4);
     });
-    $.getJSON("https://api6.ipify.org?format=jsonp&callback=?", function (json) {
+    $.getJSON("https://api64.ipify.org?format=jsonp&callback=?", function (json) {
         ipv6 = json.ip;
         console.log("IPv6: " + ipv6);
     });

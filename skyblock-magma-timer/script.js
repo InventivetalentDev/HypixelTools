@@ -338,6 +338,8 @@ $(document).ready(function () {
             $("#confirmationModal").modal("close");
 
             refreshEstimate();
+
+            grecaptcha.reset();
         })
     });
 

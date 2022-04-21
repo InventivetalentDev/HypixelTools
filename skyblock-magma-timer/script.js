@@ -107,53 +107,53 @@ $(document).ready(function () {
         // Start timeout before showing any buttons, since it looks like a lot of people like clicking buttons with shiny colors
         if (startCounter > 15) {
             if (now % 2 === 0) {
-                if (minutesUntilNextSpawn > 25 && estimateData.confidence > 0.3) {
-                    $("#waveBlazeBtn").hide();
-                } else {
-                    $("#waveBlazeBtn").show();
-                }
-                if ((minutesSinceLastBlaze < 30 && minutesSinceLastBlaze > 5) || (estimateData.latest.blaze === 0 && minutesSinceLastMagma < 30 && minutesSinceLastMagma > 1))
-                    $("#waveBlazeBtn").attr("disabled", true);
-                if (now - estimateData.latest.blaze < twentyMinsInMillis) {
-                    $("#waveBlazeTime").text("(" + moment(estimateData.latest.blaze).fromNow() + ")");
-                    $("#waveBlazeBtn").attr("data-tooltip", estimateData.latestConfirmations.blaze + " Confirmations");
-                    // $("#waveBlazeBtn").attr("disabled", true);
-                } else {
-                    $("#waveBlazeTime").text("");
-                    $("#waveBlazeBtn").attr("data-tooltip", "Not Confirmed");
-                }
-
-                if (minutesUntilNextSpawn > 15 && estimateData.confidence > 0.3) {
-                    $("#waveMagmaBtn").hide();
-                } else {
-                    $("#waveMagmaBtn").show();
-                }
-                if ((minutesSinceLastMagma < 30 && minutesSinceLastMagma > 5) || (estimateData.latest.magma === 0 && minutesSinceLastMusic < 30 && minutesSinceLastMusic > 1))
-                    $("#waveMagmaBtn").attr("disabled", true);
-                if (now - estimateData.latest.magma < tenMinsInMillis) {
-                    $("#waveMagmaTime").text("(" + moment(estimateData.latest.magma).fromNow() + ")");
-                    $("#waveMagmaBtn").attr("data-tooltip", estimateData.latestConfirmations.magma + " Confirmations");
-                    // $("#waveMagmaBtn").attr("disabled", true);
-                } else {
-                    $("#waveMagmaTime").text("");
-                    $("#waveMagmaBtn").attr("data-tooltip", "Not Confirmed")
-                }
-
-                if (minutesUntilNextSpawn > 5 && estimateData.confidence > 0.3) {
-                    $("#musicBtn").hide();
-                } else {
-                    $("#musicBtn").show();
-                }
-                if (minutesSinceLastMusic < 30 && minutesSinceLastMusic > 5)
-                    $("#musicBtn").attr("disabled", true);
-                if (now - estimateData.latest.music < fiveMinsInMillis) {
-                    $("#musicTime").text("(" + moment(estimateData.latest.music).fromNow() + ")");
-                    $("#musicBtn").attr("data-tooltip", estimateData.latestConfirmations.music + " Confirmations");
-                    // $("#musicBtn").attr("disabled", true);
-                } else {
-                    $("#musicTime").text("");
-                    $("#musicBtn").attr("data-tooltip", "Not Confirmed");
-                }
+                // if (minutesUntilNextSpawn > 25 && estimateData.confidence > 0.3) {
+                //     $("#waveBlazeBtn").hide();
+                // } else {
+                //     $("#waveBlazeBtn").show();
+                // }
+                // if ((minutesSinceLastBlaze < 30 && minutesSinceLastBlaze > 5) || (estimateData.latest.blaze === 0 && minutesSinceLastMagma < 30 && minutesSinceLastMagma > 1))
+                //     $("#waveBlazeBtn").attr("disabled", true);
+                // if (now - estimateData.latest.blaze < twentyMinsInMillis) {
+                //     $("#waveBlazeTime").text("(" + moment(estimateData.latest.blaze).fromNow() + ")");
+                //     $("#waveBlazeBtn").attr("data-tooltip", estimateData.latestConfirmations.blaze + " Confirmations");
+                //     // $("#waveBlazeBtn").attr("disabled", true);
+                // } else {
+                //     $("#waveBlazeTime").text("");
+                //     $("#waveBlazeBtn").attr("data-tooltip", "Not Confirmed");
+                // }
+                //
+                // if (minutesUntilNextSpawn > 15 && estimateData.confidence > 0.3) {
+                //     $("#waveMagmaBtn").hide();
+                // } else {
+                //     $("#waveMagmaBtn").show();
+                // }
+                // if ((minutesSinceLastMagma < 30 && minutesSinceLastMagma > 5) || (estimateData.latest.magma === 0 && minutesSinceLastMusic < 30 && minutesSinceLastMusic > 1))
+                //     $("#waveMagmaBtn").attr("disabled", true);
+                // if (now - estimateData.latest.magma < tenMinsInMillis) {
+                //     $("#waveMagmaTime").text("(" + moment(estimateData.latest.magma).fromNow() + ")");
+                //     $("#waveMagmaBtn").attr("data-tooltip", estimateData.latestConfirmations.magma + " Confirmations");
+                //     // $("#waveMagmaBtn").attr("disabled", true);
+                // } else {
+                //     $("#waveMagmaTime").text("");
+                //     $("#waveMagmaBtn").attr("data-tooltip", "Not Confirmed")
+                // }
+                //
+                // if (minutesUntilNextSpawn > 5 && estimateData.confidence > 0.3) {
+                //     $("#musicBtn").hide();
+                // } else {
+                //     $("#musicBtn").show();
+                // }
+                // if (minutesSinceLastMusic < 30 && minutesSinceLastMusic > 5)
+                //     $("#musicBtn").attr("disabled", true);
+                // if (now - estimateData.latest.music < fiveMinsInMillis) {
+                //     $("#musicTime").text("(" + moment(estimateData.latest.music).fromNow() + ")");
+                //     $("#musicBtn").attr("data-tooltip", estimateData.latestConfirmations.music + " Confirmations");
+                //     // $("#musicBtn").attr("disabled", true);
+                // } else {
+                //     $("#musicTime").text("");
+                //     $("#musicBtn").attr("data-tooltip", "Not Confirmed");
+                // }
 
                 if (minutesUntilNextSpawn > 4 && minutesSinceLastSpawn > 1 && estimateData.confidence > 0.3) {
                     $("#spawnedBtn").hide();
@@ -210,7 +210,7 @@ $(document).ready(function () {
             fiveMinuteNotification = null;
         }
         if (duration < tenMinsInMillis) {
-            message = "If you're not already in the Blazing Fortress, you should get going!";
+            message = "If you're not already on the Crimson Isle, you should get going!";
 
             if (localStorage.getItem("tenMinNotification") === "true") {
                 if (!tenMinuteNotification && !fiveMinuteNotification) {
@@ -259,18 +259,18 @@ $(document).ready(function () {
     ping();
     setInterval(ping, 30000);
 
-    $("#waveBlazeBtn").click(function () {
-        let $this = $(this);
-        doEventPost($this, "blaze", "a blaze wave", false);
-    });
-    $("#waveMagmaBtn").click(function () {
-        let $this = $(this);
-        doEventPost($this, "magma", "a magma wave", false);
-    });
-    $("#musicBtn").click(function () {
-        let $this = $(this);
-        doEventPost($this, "music", "music", false);
-    });
+    // $("#waveBlazeBtn").click(function () {
+    //     let $this = $(this);
+    //     doEventPost($this, "blaze", "a blaze wave", false);
+    // });
+    // $("#waveMagmaBtn").click(function () {
+    //     let $this = $(this);
+    //     doEventPost($this, "magma", "a magma wave", false);
+    // });
+    // $("#musicBtn").click(function () {
+    //     let $this = $(this);
+    //     doEventPost($this, "music", "music", false);
+    // });
     $("#spawnedBtn").click(function () {
         let $this = $(this);
         doEventPost($this, "spawn", "a boss spawn", false);

@@ -155,10 +155,13 @@ $(document).ready(function () {
             console.log(data);
             estimateData = data;
 
-
             updateTimer();
             clearInterval(timerId);
             timerId = setInterval(updateTimer, 1000);// tick every second
+
+            // if (!$("#fillHeight").val()) {
+            //     $("#fillHeight").val(""+estimateData.fillHeight)
+            // }
         });
 
         // $.ajax("https://hypixel-api.inventivetalent.org/api/skyblock/bosstimer/magma/activeUsers").done(function (data) {
@@ -187,7 +190,11 @@ $(document).ready(function () {
 
     $("#eruptedButton").click(function () {
         let $this = $(this);
-        doEventPost($this, "eruption");
+        let extra = {};
+        if ($("#fillHeight").val()) {
+            extra.height = parseInt($("#fillHeight").val())
+        }
+        doEventPost($this, "eruption", extra);
     });
     $("#fillBtn").click(function () {
         let $this = $(this);

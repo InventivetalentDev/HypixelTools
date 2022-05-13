@@ -196,6 +196,9 @@ $(document).ready(function () {
             extra.height = parseInt($("#fillHeight").val())
         }
         doEventPost($this, "fill", extra);
+        setTimeout(function () {
+            $this.attr("disabled", false);
+        }, 10000);
     });
 
     function doEventPost($this, event, extraData) {

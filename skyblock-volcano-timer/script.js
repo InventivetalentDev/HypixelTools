@@ -102,8 +102,10 @@ $(document).ready(function () {
 
                 if (minutesUntilNextEruption > 20) {
                     $("#fillWrapper").hide()
+                    $("#fillBtn").hide();
                 }else{
                     $("#fillWrapper").show();
+                    $("#fillBtn").show();
 
                 }
 

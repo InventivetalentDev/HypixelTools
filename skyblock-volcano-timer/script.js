@@ -91,13 +91,20 @@ $(document).ready(function () {
                 } else {
                     $("#eruptedButton").show();
                 }
-                if (now - estimateData.latest.spawn < fiveMinsInMillis) {
-                    $("#eruptionTime").text("(" + moment(estimateData.latest.spawn).fromNow() + ")");
-                    $("#eruptedButton").attr("data-tooltip", estimateData.latestConfirmations.spawn + " Confirmations");
+                if (now - estimateData.latest.eruption < fiveMinsInMillis) {
+                    $("#eruptionTime").text("(" + moment(estimateData.latest.eruption).fromNow() + ")");
+                    $("#eruptedButton").attr("data-tooltip", estimateData.latestConfirmations.eruption + " Confirmations");
                     // $("#musicBtn").attr("disabled", true);
                 } else {
                     $("#eruptionTime").text("");
                     $("#eruptedButton").attr("data-tooltip", "Not Confirmed")
+                }
+
+                if (minutesUntilNextEruption > 20) {
+                    $("#fillWrapper").hide()
+                }else{
+                    $("#fillWrapper").show();
+
                 }
 
                 // update tooltips
@@ -178,11 +185,19 @@ $(document).ready(function () {
 
     $("#eruptedButton").click(function () {
         let $this = $(this);
-        doEventPost($this, "eruption", "an eruption", false);
+        doEventPost($this, "eruption");
+    });
+    $("#fillBtn").click(function () {
+        let $this = $(this);
+        let extra = {};
+        if ($("#fillHeight").val()) {
+            extra.height = parseInt($("#fillHeight").val())
+        }
+        doEventPost($this, "fill", extra);
     });
 
-    function doEventPost($this, event, eventDescription, skipEstimateRefresh) {
-        showConfirmationModal(event);
+    function doEventPost($this, event, extraData) {
+        showConfirmationModal(event, extraData);
         $this.attr("disabled", true);
         // let username = $("#mcUsername").val();
         // confirmAndCaptchaAdd(eventDescription, function (b) {
@@ -209,7 +224,8 @@ $(document).ready(function () {
         // })
     }
 
-    function showConfirmationModal(event) {
+    function showConfirmationModal(event, extraData) {
+        window.extraEventData = extraData;
         $("#addEventType").val(event);
         $("#confirmationModal").modal("open");
     }
@@ -225,23 +241,29 @@ $(document).ready(function () {
         let username = $("#mcUsername").val();
 
 
+        let data = {
+            type: event,
+            captcha: captcha,
+            username: username,
+            ipv4: ipv4,
+            ipv6: ipv6
+        }
+
+        if (window.extraEventData) {
+            data = Object.assign(data, window.extraEventData);
+        }
+
         $.ajax({
             method: "POST",
             url: "https://hypixel-api.inventivetalent.org/api/skyblock/volcano/addEvent",
-            data: {
-                type: event,
-                captcha: captcha,
-                username: username,
-                ipv4: ipv4,
-                ipv6: ipv6
-            }
+            data: data
         }).done(function () {
             $("#confirmationModal").modal("close");
 
             refreshEstimate();
 
             grecaptcha.reset();
-        })
+        });
     });
 
 

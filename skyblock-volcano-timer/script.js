@@ -100,7 +100,7 @@ $(document).ready(function () {
                     $("#eruptedButton").attr("data-tooltip", "Not Confirmed")
                 }
 
-                if (minutesUntilNextEruption > 20) {
+                if (minutesUntilNextEruption > 30) {
                     $("#fillWrapper").hide()
                     $("#fillBtn").hide();
                 }else{

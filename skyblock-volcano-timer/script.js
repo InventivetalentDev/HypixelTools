@@ -84,7 +84,7 @@ $(document).ready(function () {
         }
 
         // Start timeout before showing any buttons, since it looks like a lot of people like clicking buttons with shiny colors
-        if (startCounter > 15) {
+        if (startCounter > 10) {
             if (now % 2 === 0) {
                 if (minutesUntilNextEruption > 4 && minutesSinceLastEruption > 1 && estimateData.confidence > 0.3) {
                     $("#eruptedButton").hide();
@@ -276,6 +276,10 @@ $(document).ready(function () {
 
             grecaptcha.reset();
         });
+
+        setTimeout(() => {
+            $("#captchaConfirmSubmit").attr("disabled", false);
+        }, 20000);
     });
 
 
